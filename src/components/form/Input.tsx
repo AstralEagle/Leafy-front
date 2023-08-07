@@ -19,6 +19,8 @@ export const InputWithIcon = ({StartIcon, customColor = COLORS.lightGrey, ...res
       background: "#FFF",
       borderRadius: "10px",
       color: customColor,
+      width: "356px",
+      maxWidth: "100%",
       boxShadow: "rgba(0, 0, 0, 0.04) 0px 3px 5px;",
       ".MuiOutlinedInput-root": {
         border: "transparent",
