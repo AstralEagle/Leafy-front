@@ -4,6 +4,7 @@ import { Typography } from "@mui/material";
 
 const LoginTitle = () => (
   <Typography
+    component="h2"
     sx={{
       "span": {
         fontSize: "40px",

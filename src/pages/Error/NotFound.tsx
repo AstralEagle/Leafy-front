@@ -1,28 +1,26 @@
 import React from "react";
-import { isRouteErrorResponse, useRouteError } from "react-router-dom";
+import HomeLayout from "../../layouts/HomeLayout";
+import { useNavigate } from "react-router-dom";
+import { Button } from "@mui/material";
 
 const NotFound = () => {
-  const error: unknown = useRouteError();
-  let errorMessage: string;
-
-  if (isRouteErrorResponse(error)) {
-    errorMessage = error.error?.message || error.statusText;
-  } else if (error instanceof Error) {
-    errorMessage = error.message;
-  } else if (typeof error === 'string') {
-    errorMessage = error;
-  } else {
-    errorMessage = 'Unknown error';
-  }
+  const navigate = useNavigate();
 
   return (
-    <div id="error-page">
-      <h1>Oops!</h1>
-      <p>Sorry, the page was not found.</p>
-      <p>
-        <i>{errorMessage}</i>
-      </p>
-    </div>
+    <HomeLayout
+      content={
+        <>
+          <h2>Oops!</h2>
+          <p>Sorry, the page was not found.</p>
+          <Button
+            color="secondary"
+            onClick={() => navigate(-1)}
+          >
+            Back to previous page
+          </Button>
+        </>
+      }
+    />
   );
 }
 

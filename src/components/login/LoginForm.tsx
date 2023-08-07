@@ -1,49 +1,82 @@
 import * as React from "react";
 import { LockOutlined, PersonOutline } from "@mui/icons-material";
-import { Box, Stack, Typography } from "@mui/material";
+import { Stack } from "@mui/material";
 import { InputWithIcon } from "../form/Input";
-import { BasicButton } from "../button/button";
-import * as COLORS from "../../style/colors";
+import { BasicButton, LoadingButton } from "../button/button";
+import NoAccountLink from "./NoAccountLink";
 
-export const LoginForm = () => (
-  <Stack
-    spacing={{ xs: 2, md: 6 }}
-    direction="column"
-    useFlexGap
-    flexWrap="wrap"
-    justifyContent={"space-between"}
-    alignItems={"center"}
-  >
-    <InputWithIcon StartIcon={PersonOutline} placeholder="Enter email" />
-    <InputWithIcon StartIcon={LockOutlined} type="password" placeholder="Password"/>
-    <BasicButton>Login</BasicButton>
-    <Box sx={{
-      "span": {
-        fontSize: "20px"
+interface LoginApi {
+  email: string;
+  password: string;
+}
+
+export const LoginForm = () => {
+  const [isSubmitting, setIsSubmitting] = React.useState<boolean>(false);
+
+  const [account, setAccount] = React.useState<LoginApi>({
+    email: "",
+    password: ""
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>, property: "email" | "password") => {
+    setAccount((prev) => ({
+      ...prev,
+      [property]: e.target.value
+    }))
+  }
+
+  const handleSubmit = () => {
+    setIsSubmitting(true);
+    // TODO : 
+    // rqt de connexion
+    // setIsSubmitting(false)
+    // redirect to dashboard si rqt OK
+    // sinon message d'erreur
+    // ! \\ supprimer setTimeout
+    setTimeout(() => setIsSubmitting(false), 400);
+  }
+
+  const isSubmitBtnDisabled = !account.email.length || !account.password.length;
+
+  return (
+    <Stack
+      spacing={{ xs: 2, md: 6 }}
+      direction="column"
+      useFlexGap
+      flexWrap="wrap"
+      justifyContent={"space-between"}
+      alignItems={"center"}
+    >
+      <InputWithIcon
+        StartIcon={PersonOutline}
+        type="email"
+        placeholder="Enter email"
+        value={account.email}
+        onChange={(e) => handleChange(e, "email")}
+      />
+
+      <InputWithIcon
+        StartIcon={LockOutlined}
+        type="password"
+        placeholder="Password"
+        onChange={(e) => handleChange(e, "password")}
+      />
+
+      {
+        isSubmitting ?
+        <LoadingButton />
+        :
+        <BasicButton
+          disabled={isSubmitting || isSubmitBtnDisabled}
+          onClick={handleSubmit}
+        >
+          Login
+        </BasicButton>
       }
-    }}>
-      <Typography
-        component="span"
-        sx={{
-          color: COLORS.deepBlue,
-          fontWeight: 300,
-        }}
-      >
-        Don't have any account ?
-      </Typography>
-      {" "}
-      <Box
-        component="span"
-        sx={{
-          color: COLORS.darkOrange,
-          fontWeight: 500,
-          pointer: "cursor"
-        }}
-      >
-        Sign up
-      </Box>
-    </Box>
-  </Stack>
-)
+
+      <NoAccountLink />
+    </Stack>
+  )
+}
 
 export default LoginForm
