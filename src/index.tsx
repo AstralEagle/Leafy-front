@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { blue, brown } from "./style/colors";
+import Root from './routes/Root';
 
 const theme = createTheme({
   palette: {
@@ -24,7 +24,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
-      <App />
+      <Root />
     </ThemeProvider>
   </React.StrictMode>
 );
