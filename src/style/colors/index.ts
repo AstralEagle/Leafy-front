@@ -45,7 +45,7 @@ export const otherGrey = "#0F0E0E";
 export const navbarBlue = "#566571";
 export const navbarBg = "#D9D9D9";
 export const cellBlue = "#7A8F9E";
-
+export const lightestGrey = "#E9E5DB";
 
 // ADMIN
 export const darkestOrange = "#FF5833";
