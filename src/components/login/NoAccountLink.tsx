@@ -16,13 +16,13 @@ const NoAccountLink = () => (
       >
         Don't have any account ?
       </Typography>
-      {" "}
       <Link
         style={{
           color: COLORS.darkOrange,
           fontWeight: 500,
           cursor: "pointer",
-          textDecoration: "none"
+          textDecoration: "none",
+          marginLeft: "1rem"
         }}
         to={"/signup"}
       >
