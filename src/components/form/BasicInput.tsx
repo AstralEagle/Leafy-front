@@ -1,20 +1,13 @@
 import * as React from "react";
-import { OutlinedInput, InputAdornment, SvgIconTypeMap, OutlinedInputProps } from "@mui/material";
-import { OverridableComponent } from "@mui/material/OverridableComponent";
+import { OutlinedInput, OutlinedInputProps } from "@mui/material";
 import * as COLORS from "../../style/colors";
 
-interface InputProps extends OutlinedInputProps {
-  StartIcon: OverridableComponent<SvgIconTypeMap<{}, "svg">>;
+interface BasicInputProps extends OutlinedInputProps {
   customColor?: string;
 }
 
-export const InputWithIcon = ({StartIcon, customColor = COLORS.lightGrey, ...rest}: InputProps) => (
+const BasicInput = ({customColor, ...rest}: BasicInputProps) => (
   <OutlinedInput
-    startAdornment={
-      <InputAdornment position="start">
-        <StartIcon sx={{ fill: customColor }}/>
-      </InputAdornment>
-    }
     sx={{
       background: "#FFF",
       borderRadius: "10px",
@@ -29,10 +22,12 @@ export const InputWithIcon = ({StartIcon, customColor = COLORS.lightGrey, ...res
         borderLeft: "1px solid " + COLORS.lightestGrey,
         paddingLeft: 2,
       },
-      ".Mui-focused": {
+      ".Mui-focused, .MuiOutlinedInput-notchedOutline": {
         border: 0
       }
     }}
     {...rest}
   />
 )
+
+export default BasicInput;
