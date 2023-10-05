@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Typography } from "@mui/material"
-import * as COLORS from "../../style/colors";
+import { COLORS } from "../../style/colors";
 import { Link } from "react-router-dom";
 
 const NoAccountLink = () => (
