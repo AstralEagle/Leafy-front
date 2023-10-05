@@ -11,7 +11,7 @@ const HomeLayout = ({ content }: HomepageProps) => {
 
   return (
     <Grid container sx={{ height: "100vh" }}>
-      <Grid item xs={12} md={6} sx={{ background: COLORS.pastelPink, pl: "3%", pt: "5%", position: "relative" }}>
+      <Grid item xs={12} md={6} sx={{ background: COLORS.pastelPink, pl: "3%", pt: "5%", position: "relative", minHeight: "35vh" }}>
         <Box
           sx={{
             height: "50vh",
@@ -53,6 +53,7 @@ const HomeLayout = ({ content }: HomepageProps) => {
           direction="column"
           justifyContent={"center"}
           alignItems={"center"}
+          margin={0}
         >
         {content}
         </Stack>

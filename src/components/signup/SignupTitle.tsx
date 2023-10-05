@@ -6,13 +6,13 @@ const SignupTitle = () => (
   <Typography
     component="h2"
     sx={{
-      "span": {
         fontSize: "40px",
         fontWeight: 600,
-      }
+        mt: 3,
+        color: COLORS.deepBlue
     }}
   >
-    <Typography component="span" sx={{ color: COLORS.deepBlue}}>Create an account</Typography>
+   Create an account
   </Typography>
 );
 

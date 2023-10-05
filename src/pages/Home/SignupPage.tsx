@@ -14,7 +14,7 @@ const SignupPage = () => {
           direction="column"
           useFlexGap
           flexWrap="wrap"
-          justifyContent={"space-between"}
+          justifyContent={"space-around"}
           alignItems={"center"}
         >
           <SignupTitle />

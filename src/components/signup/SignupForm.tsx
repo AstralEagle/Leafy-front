@@ -87,7 +87,7 @@ export const LoginForm = () => {
         display: "flex",
         justifyContent: "flex-end",
         width: "100%",
-        mt: 2
+        my: 2
       }}>
         {isSubmitting ? (
           <LoadingButton />
