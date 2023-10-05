@@ -1,6 +1,6 @@
 import { Box, Grid, Stack, Typography } from "@mui/material";
 import React from "react";
-import * as COLORS from "../style/colors";
+import { COLORS } from "../style/colors";
 import HangarAsset from "../assets/images/hangar.svg";
 
 interface HomepageProps {

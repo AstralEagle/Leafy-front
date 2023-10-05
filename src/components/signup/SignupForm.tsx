@@ -10,7 +10,11 @@ interface SignupApi {
   password: string;
 }
 
-export const LoginForm = () => {
+interface SignupFormProps {
+  goToNextStep: () => void;
+}
+
+export const SignupForm = ({ goToNextStep }: SignupFormProps) => {
   const [isSubmitting, setIsSubmitting] = React.useState<boolean>(false);
 
   const [account, setAccount] = React.useState<SignupApi>({
@@ -35,13 +39,14 @@ export const LoginForm = () => {
     // TODO :
     // rqt d'inscription
     // setIsSubmitting(false)
-    // redirect to dashboard si rqt OK
+    // redirect to billing address si rqt OK
+    goToNextStep();
     // sinon message d'erreur
     // ! \\ supprimer setTimeout
     setTimeout(() => setIsSubmitting(false), 400);
   };
 
-  const isSubmitBtnDisabled = !account.email.length || !account.password.length;
+  const isSubmitBtnDisabled = !account.email.length || !account.password.length || !account.firstName.length || !account.lastName.length;
 
   return (
     <Stack
@@ -101,4 +106,4 @@ export const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default SignupForm;

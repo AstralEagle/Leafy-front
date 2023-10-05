@@ -1,7 +1,7 @@
 import * as React from "react";
 import { InputAdornment, SvgIconTypeMap, OutlinedInputProps } from "@mui/material";
 import { OverridableComponent } from "@mui/material/OverridableComponent";
-import * as COLORS from "../../style/colors";
+import { COLORS } from "../../style/colors";
 import BasicInput from "./BasicInput";
 
 interface InputProps extends OutlinedInputProps {

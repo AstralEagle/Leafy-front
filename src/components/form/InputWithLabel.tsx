@@ -1,6 +1,6 @@
 import { FormGroup, FormLabel, InputProps } from "@mui/material"
 import React from "react"
-import * as COLORS from "../../style/colors";
+import { COLORS } from "../../style/colors";
 import BasicInput from "./BasicInput";
 
 interface InputWithLabelProps extends InputProps {

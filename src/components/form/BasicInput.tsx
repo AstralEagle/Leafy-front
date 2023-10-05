@@ -1,6 +1,6 @@
 import * as React from "react";
 import { OutlinedInput, OutlinedInputProps } from "@mui/material";
-import * as COLORS from "../../style/colors";
+import { COLORS } from "../../style/colors";
 
 interface BasicInputProps extends OutlinedInputProps {
   customColor?: string;

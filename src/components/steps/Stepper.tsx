@@ -1,6 +1,6 @@
 import React from "react";
 import { Stepper as StepperMui, Step, StepLabel, Box, Typography, StepConnector, stepConnectorClasses, styled } from "@mui/material";
-import * as COLORS from "../../style/colors";
+import { COLORS } from "../../style/colors";
 
 export enum StepEnum {
   "Profile",

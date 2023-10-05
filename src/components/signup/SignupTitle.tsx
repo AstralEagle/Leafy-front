@@ -1,5 +1,5 @@
 import React from "react";
-import * as COLORS from "../../style/colors";
+import { COLORS } from "../../style/colors";
 import { Typography } from "@mui/material";
 
 const SignupTitle = () => (
