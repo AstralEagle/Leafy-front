@@ -1,5 +1,5 @@
 import * as React from "react";
-import * as COLORS from "../../style/colors";
+import { COLORS } from "../../style/colors";
 import { Button, ButtonProps, CircularProgress } from "@mui/material";
 
 interface BasicButtonProps extends ButtonProps {
