@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Box, Stack } from "@mui/material";
 import InputWithLabel from "../form/InputWithLabel";
-import { BasicButton, LoadingButton } from "../button/button";
+import { BasicButton, LoadingButton } from "../button/Button";
 
 interface AddressApi {
   street: string;

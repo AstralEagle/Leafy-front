@@ -2,7 +2,7 @@ import * as React from "react";
 import { LockOutlined, PersonOutline } from "@mui/icons-material";
 import { Stack } from "@mui/material";
 import InputWithIcon from "../form/InputWithIcon";
-import { BasicButton, LoadingButton } from "../button/button";
+import { BasicButton, LoadingButton } from "../button/Button";
 import NoAccountLink from "./NoAccountLink";
 
 interface LoginApi {

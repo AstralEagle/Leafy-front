@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Box, Stack } from "@mui/material";
 import InputWithLabel from "../form/InputWithLabel";
-import { BasicButton, LoadingButton } from "../button/button";
+import { BasicButton, LoadingButton } from "../button/Button";
 
 interface SignupApi {
   firstName: string;
@@ -10,11 +10,11 @@ interface SignupApi {
   password: string;
 }
 
-interface SignupFormProps {
+interface ProfileFormProps {
   goToNextStep: () => void;
 }
 
-export const SignupForm = ({ goToNextStep }: SignupFormProps) => {
+export const ProfileForm = ({ goToNextStep }: ProfileFormProps) => {
   const [isSubmitting, setIsSubmitting] = React.useState<boolean>(false);
 
   const [account, setAccount] = React.useState<SignupApi>({
@@ -106,4 +106,4 @@ export const SignupForm = ({ goToNextStep }: SignupFormProps) => {
   );
 };
 
-export default SignupForm;
+export default ProfileForm;
