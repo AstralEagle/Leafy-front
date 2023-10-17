@@ -10,6 +10,8 @@ const CheckoutForm = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    console.log(stripe, elements)
+
     if (!stripe || !elements) return;
 
     const result = await stripe.confirmPayment({

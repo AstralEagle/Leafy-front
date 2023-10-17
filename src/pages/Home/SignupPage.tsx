@@ -9,7 +9,7 @@ import AddressForm from "../../components/signup/AddressForm";
 import { PaymentCreditCard } from "../../components/payment/PaymentCreditCard";
 
 const SignupPage = () => {
-  const [currentStep, setCurrentStep] = React.useState<StepEnum>(StepEnum.Profile);
+  const [currentStep, setCurrentStep] = React.useState<StepEnum>(StepEnum.Finalization);
 
   return (
     <HomeLayout

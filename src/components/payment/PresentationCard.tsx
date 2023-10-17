@@ -4,15 +4,35 @@ import { StripeCardElementOptions } from "@stripe/stripe-js";
 import { Box, CircularProgress, Stack } from "@mui/material";
 import { BasicButton } from "../button/Button";
 import BasicLabel from "../form/BasicLabel";
+import { APP_URL } from "../../routes/Url";
 
 interface Props {
-  onClick: (e: any) => void;
   isLoading: boolean;
   elements?: any;
   stripe?: any;
 }
 
-export const PresentationCard = ({ onClick, isLoading }: Props) => {
+export const PresentationCard = ({ isLoading, stripe, elements }: Props) => {
+
+  const handleSubmit = async (event: any) => {
+    event.preventDefault();
+
+    if (!stripe || !elements) return;
+
+    const result = await stripe.confirmPayment({
+      elements,
+      confirmParams: {
+        return_url: APP_URL,
+      },
+    });
+
+    if (result.error) {
+      console.log(result.error.message);
+    } else {
+      
+    }
+  };
+  
   const [elementsCardValidity, setElementsCardValidity] = React.useState({
     cardNumber: false,
     cardExpiry: false,
@@ -129,7 +149,7 @@ export const PresentationCard = ({ onClick, isLoading }: Props) => {
           />
         </Stack>
       </Stack>
-      <BasicButton onClick={onClick} disabled={isLoading || isDisabled} fullWidth>
+      <BasicButton onClick={handleSubmit} disabled={isLoading || isDisabled} fullWidth>
         {isLoading ? (
           <Box sx={{ alignItems: "center" }}>
             Paiement en cours
