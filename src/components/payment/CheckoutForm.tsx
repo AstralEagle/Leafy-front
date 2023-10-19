@@ -1,36 +1,52 @@
 import * as React from 'react';
-import { useStripe, useElements, PaymentElement } from '@stripe/react-stripe-js';
-import { APP_URL } from '../../routes/Url';
+import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
 import { BasicButton } from '../button/Button';
+import { AMOUNT_TTC } from '../../amount';
+import axios from "axios";
+import { secret } from '../../routes/Api';
 
 const CheckoutForm = () => {
   const stripe = useStripe();
   const elements = useElements();
 
+  const [clientSecret, setClientSecret] = React.useState<string>("");
+  const [paymentIntentId, setPaymentIntentId] = React.useState<string>("");
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    console.log(stripe, elements)
-
     if (!stripe || !elements) return;
 
-    const result = await stripe.confirmPayment({
-      elements,
-      confirmParams: {
-        return_url: APP_URL,
+    const { paymentIntent, error } = await stripe.confirmCardPayment(clientSecret, {
+      payment_method: {
+        card: elements.getElement(CardElement)!,
       },
     });
 
-    if (result.error) {
-      console.log(result.error.message);
+    if (error) {
+      console.error(error);
+    } else {
+      console.log('PaymentIntent was successful:', paymentIntent);
     }
   };
 
+  React.useEffect(() => {
+    secret({ amount: AMOUNT_TTC, 
+      onSuccess: (response: any) => {
+        setClientSecret(response.data.clientSecret);
+        setPaymentIntentId(response.data.paymentIntentId);
+      },
+      onError : (error: Error) => {
+        console.error('Error fetching client secret:', error);
+      }
+    });
+  }, []);
+
   return (
     <form onSubmit={handleSubmit}>
-      <PaymentElement />
+      <CardElement />
       <BasicButton disabled={!stripe}>
-        Next
+        Pay
       </BasicButton>
     </form>
   )

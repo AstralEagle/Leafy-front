@@ -7,6 +7,7 @@ import Stepper, { StepEnum } from "../../components/steps/Stepper";
 import PurchaseForm from "../../components/signup/PurchaseForm";
 import AddressForm from "../../components/signup/AddressForm";
 import { PaymentCreditCard } from "../../components/payment/PaymentCreditCard";
+import Payment from "../../components/stripe/Payment";
 
 const SignupPage = () => {
   const [currentStep, setCurrentStep] = React.useState<StepEnum>(StepEnum.Finalization);
@@ -31,7 +32,7 @@ const SignupPage = () => {
 
           {currentStep === StepEnum.Address && <AddressForm goToNextStep={() => setCurrentStep(StepEnum.Finalization)} />}
 
-          {currentStep === StepEnum.Finalization && <PaymentCreditCard />}
+          {currentStep === StepEnum.Finalization && <Payment />}
         </Stack>
       }
     />
