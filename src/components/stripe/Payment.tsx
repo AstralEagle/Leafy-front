@@ -1,4 +1,4 @@
-import { CircularProgress } from "@mui/material";
+import { Alert, CircularProgress } from "@mui/material";
 import { Elements, ElementsConsumer } from "@stripe/react-stripe-js";
 import { StripeElementsOptions, loadStripe } from "@stripe/stripe-js";
 import * as React from "react";
@@ -6,18 +6,14 @@ import CheckoutForm from "./CheckoutForm";
 import axios from "axios";
 import { API_URL } from "../../routes/Url";
 
-// Make sure to call `loadStripe` outside of a component’s render to avoid
-// recreating the `Stripe` object on every render.
-const stripePromise = loadStripe(
-  "pk_test_51Ny9HwHoQWeOEuYmBANT6VMcajclqFk0sye4rCAXhk7rv3d3BoQ0XExVLBrMtBxbAwH74G6pl45FYCBpIyG6oBR200e9lF87iT",
-);
+const stripePromise = loadStripe(process.env.REACT_APP_CLIENT_PUBLIC_STRIPE!);
 
 const Payment = () => {
   const [isLoading, setIsLoading] = React.useState<boolean>(true);
-  const [clientSecret, setClientSecret] = React.useState<{client_secret: string} | undefined>();
+  const [clientSecret, setClientSecret] = React.useState<{ client_secret: string } | undefined>();
+  const [errorMessage, setErrorMessage] = React.useState<string>("");
 
   const options: StripeElementsOptions = {
-    // passing the client secret obtained from the server
     clientSecret: clientSecret?.client_secret,
     appearance: {
       theme: "stripe",
@@ -37,9 +33,10 @@ const Payment = () => {
 
       setClientSecret(response.data);
       setIsLoading(false);
+      setErrorMessage("");
     } catch (e: any) {
-      console.error(e);
-      // ToDO : gérer affichage en cas d'erreur
+      setIsLoading(false);
+      setErrorMessage("Le paiement n'est actuellement pas disponible.");
     }
   };
 
@@ -47,16 +44,17 @@ const Payment = () => {
     getClientSecret();
   }, []);
 
+
   return isLoading ? (
     <CircularProgress />
-  ) : !!clientSecret ? (
+  ) : !clientSecret || !!errorMessage.length ? (
+    <Alert severity="error">{errorMessage}</Alert>
+  ) : (
     <Elements stripe={stripePromise} options={options}>
       <ElementsConsumer>
         {({ stripe, elements }) => <CheckoutForm stripe={stripe} elements={elements} clientSecret={clientSecret} />}
       </ElementsConsumer>
     </Elements>
-  ) : (
-    <></>
   );
 };
 

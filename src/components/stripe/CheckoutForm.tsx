@@ -5,6 +5,7 @@ import { BasicButton } from "../button/Button";
 import { Box, CircularProgress, Stack } from "@mui/material";
 import BasicLabel from "../form/BasicLabel";
 import { StripeCardElementOptions } from "@stripe/stripe-js";
+import { AMOUNT_TTC } from "../../amount";
 
 interface CheckoutFormProps {
   stripe: any;
@@ -21,32 +22,23 @@ const CheckoutForm = ({ stripe, elements, clientSecret }: CheckoutFormProps) => 
     cardCvc: false,
   });
 
-
-  console.log(elements)
-
   const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.preventDefault();
+
 
     if (!stripe || !elements) return;
 
     setIsLoading(true);
 
-    const { error } = await stripe.confirmPayment({
-      elements: elementsCardValidity,
-      confirmParams: {
-        return_url: APP_URL + "/signup",
+    const { error } = await stripe.confirmCardPayment(clientSecret.client_secret, {
+      payment_method: {
+        card: elements.getElement(CardNumberElement),
       },
+      setup_future_usage: "off_session",
     });
 
     if (error) {
-      // This point will only be reached if there is an immediate error when
-      // confirming the payment. Show error to your customer (for example, payment
-      // details incomplete)
       setErrorMessage(error.message);
-    } else {
-      // Your customer will be redirected to your `return_url`. For some payment
-      // methods like iDEAL, your customer will be redirected to an intermediate
-      // site first to authorize the payment, then redirected to the `return_url`.
     }
 
     setIsLoading(false);
@@ -56,7 +48,6 @@ const CheckoutForm = ({ stripe, elements, clientSecret }: CheckoutFormProps) => 
   const isDisabled = Object.values(elementsCardValidity).includes(false);
 
   const CARD_NUMBER_OPTIONS: StripeCardElementOptions = {
-    iconStyle: "solid",
     style: {
       empty: {
         backgroundColor: "#FAFAFB",
@@ -73,7 +64,6 @@ const CheckoutForm = ({ stripe, elements, clientSecret }: CheckoutFormProps) => 
   };
 
   const CARD_CVC_OPTIONS: StripeCardElementOptions = {
-    iconStyle: "solid",
     style: {
       empty: {
         backgroundColor: "#FAFAFB",
@@ -90,7 +80,6 @@ const CheckoutForm = ({ stripe, elements, clientSecret }: CheckoutFormProps) => 
   };
 
   const CARD_EXPIRY_OPTIONS: StripeCardElementOptions = {
-    iconStyle: "solid",
     style: {
       empty: {
         backgroundColor: "#FAFAFB",

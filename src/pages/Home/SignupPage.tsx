@@ -10,7 +10,7 @@ import { PaymentCreditCard } from "../../components/payment/PaymentCreditCard";
 import Payment from "../../components/stripe/Payment";
 
 const SignupPage = () => {
-  const [currentStep, setCurrentStep] = React.useState<StepEnum>(StepEnum.Finalization);
+  const [currentStep, setCurrentStep] = React.useState<StepEnum>(StepEnum.Profile);
 
   return (
     <HomeLayout

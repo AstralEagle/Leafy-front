@@ -2,7 +2,6 @@ import * as React from 'react';
 import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
 import { BasicButton } from '../button/Button';
 import { AMOUNT_TTC } from '../../amount';
-import axios from "axios";
 import { secret } from '../../routes/Api';
 
 const CheckoutForm = () => {

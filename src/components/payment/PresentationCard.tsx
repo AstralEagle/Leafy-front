@@ -42,7 +42,6 @@ export const PresentationCard = ({ isLoading, stripe, elements }: Props) => {
   const isDisabled = Object.values(elementsCardValidity).includes(false);
 
   const CARD_NUMBER_OPTIONS: StripeCardElementOptions = {
-    iconStyle: "solid",
     style: {
       empty: {
         backgroundColor: "#FAFAFB",
@@ -59,7 +58,6 @@ export const PresentationCard = ({ isLoading, stripe, elements }: Props) => {
   };
 
   const CARD_CVC_OPTIONS: StripeCardElementOptions = {
-    iconStyle: "solid",
     style: {
       empty: {
         backgroundColor: "#FAFAFB",
@@ -76,7 +74,6 @@ export const PresentationCard = ({ isLoading, stripe, elements }: Props) => {
   };
 
   const CARD_EXPIRY_OPTIONS: StripeCardElementOptions = {
-    iconStyle: "solid",
     style: {
       empty: {
         backgroundColor: "#FAFAFB",
