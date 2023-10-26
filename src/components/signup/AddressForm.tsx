@@ -8,10 +8,13 @@ import { CountryType } from "../../helpers/Countries";
 import BasicLabel from "../form/BasicLabel";
 
 interface AddressFormProps {
-  goToNextStep: () => void;
+  submitButton: {
+    content: string;
+    onClick: () => void;
+  };
 }
 
-export const AddressForm = ({ goToNextStep }: AddressFormProps) => {
+export const AddressForm = ({ submitButton }: AddressFormProps) => {
   const { address, setAddress } = useCreateAccountStore((state) => ({
     address: state.account.address,
     setAddress: state.setAddress,
@@ -23,8 +26,6 @@ export const AddressForm = ({ goToNextStep }: AddressFormProps) => {
       [property]: value,
     });
   };
-
-  const handleSubmit = () => goToNextStep();
 
   const isSubmitBtnDisabled =
     !address.street.length ||
@@ -82,8 +83,8 @@ export const AddressForm = ({ goToNextStep }: AddressFormProps) => {
           my: 2,
         }}
       >
-        <BasicButton disabled={isSubmitBtnDisabled} onClick={handleSubmit}>
-          Next
+        <BasicButton disabled={isSubmitBtnDisabled} onClick={submitButton.onClick}>
+          {submitButton.content}
         </BasicButton>
       </Box>
     </Stack>

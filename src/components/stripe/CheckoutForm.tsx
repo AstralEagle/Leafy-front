@@ -24,7 +24,7 @@ const CheckoutForm = ({ stripe, elements, clientSecret }: CheckoutFormProps) => 
   const [billingEmail, setBillingEmail] = React.useState<string>(profile.email);
 
   const [billingName, setBillingName] = React.useState<string>(
-    profile.firstName + " " + profile.lastName.toUpperCase(),
+    profile.firstName || profile.lastName ? profile.firstName + " " + profile.lastName.toUpperCase() : "",
   );
 
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -48,7 +48,7 @@ const CheckoutForm = ({ stripe, elements, clientSecret }: CheckoutFormProps) => 
         billing_details: {
           address: {
             city: address.city,
-            country: "FR",
+            country: address.country.code,
             line1: address.street,
             postal_code: address.zipCode,
           },
@@ -101,7 +101,7 @@ const CheckoutForm = ({ stripe, elements, clientSecret }: CheckoutFormProps) => 
           mb: 2,
         }}
       >
-        <Stack direction="column" gap={1} sx={{ width: "50%" }}>
+        <Stack direction="column" gap={1} width={{ xs: "100%", md: "50%" }}>
           <BasicLabel content="Expiration date" />
           <CardExpiryElement
             options={CARD_EXPIRY_OPTIONS}
@@ -114,7 +114,7 @@ const CheckoutForm = ({ stripe, elements, clientSecret }: CheckoutFormProps) => 
             }
           />
         </Stack>
-        <Stack direction="column" gap={1} sx={{ width: "50%" }}>
+        <Stack direction="column" gap={1} width={{ xs: "100%", md: "50%" }}>
           <BasicLabel content="CVC" />
           <CardCvcElement
             options={CARD_CVC_OPTIONS}
@@ -129,23 +129,33 @@ const CheckoutForm = ({ stripe, elements, clientSecret }: CheckoutFormProps) => 
         </Stack>
       </Stack>
 
-      <InputWithLabel
-        label={"Name on card"}
-        type="text"
-        placeholder="John DOE"
-        value={billingName}
-        onChange={(e) => setBillingName(e.target.value)}
-      />
+      <Stack
+        direction="row"
+        sx={{
+          gap: 2,
+          mb: 4,
+        }}
+      >
+        <Stack width={{ xs: "100%", md: "50%" }}>
+          <InputWithLabel
+            label={"Name on card"}
+            type="text"
+            placeholder="John DOE"
+            value={billingName}
+            onChange={(e) => setBillingName(e.target.value)}
+          />
+        </Stack>
 
-      <InputWithLabel
-        label={"Email"}
-        type="email"
-        placeholder="johndoe@mail.com"
-        value={billingEmail}
-        onChange={(e) => setBillingEmail(e.target.value)}
-      />
-
-      <br />
+        <Stack width={{ xs: "100%", md: "50%" }}>
+          <InputWithLabel
+            label={"Email"}
+            type="email"
+            placeholder="johndoe@mail.com"
+            value={billingEmail}
+            onChange={(e) => setBillingEmail(e.target.value)}
+          />
+        </Stack>
+      </Stack>
 
       <BasicButton
         onClick={handleSubmit}
