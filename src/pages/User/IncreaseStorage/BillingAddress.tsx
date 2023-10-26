@@ -1,8 +1,8 @@
 import * as React from "react";
-import { Box, IconButton, Modal, Stack, Typography } from "@mui/material";
+import { Box, IconButton, Modal, Stack, Tooltip, Typography } from "@mui/material";
 import useCreateAccountStore from "../../../hooks/zustand/CreateAccountStore";
 import AddressForm from "../../../components/signup/AddressForm";
-import { ModeEdit } from "@mui/icons-material";
+import { Close, ModeEdit } from "@mui/icons-material";
 import Card from "../../../components/container/Card";
 import { COLORS } from "../../../style/colors";
 
@@ -16,7 +16,7 @@ const BillingAddress = () => {
   };
 
   return (
-    <Box sx={{ maxWidth: "90%" }}>
+    <>
       <Card
         fullWidth
         content={
@@ -40,17 +40,46 @@ const BillingAddress = () => {
         onClose={handleClose}
         aria-labelledby="modal-billingAddress"
         aria-describedby="parent-modal-billingAddress"
-        sx={{ background: "#F4F4F4" }}
+        sx={{ display: "flex", justifyContent: "space-around" }}
       >
-        <Box>
+        <Stack
+          direction="column"
+          alignItems={"center"}
+          sx={{
+            background: "#F4F4F4",
+            borderRadius: "20px",
+            margin: "auto",
+            padding: "1rem 2rem",
+            minWidth: 500,
+            maxWidth: "100%",
+          }}
+        >
+          <Stack direction="row" justifyContent={"flex-end"} width={"100%"}>
+            <Tooltip title="Close">
+              <IconButton onClick={handleClose}>
+                <Close />
+              </IconButton>
+            </Tooltip>
+          </Stack>
+          <Box
+            component="h3"
+            sx={{
+              color: COLORS.royablBlue,
+              fontSize: "2rem",
+              fontWeight: 600,
+            }}
+          >
+            Edit your billing address
+          </Box>
           <AddressForm
-            goToNextStep={function (): void {
-              throw new Error("Function not implemented.");
+            submitButton={{
+              content: "Confirm",
+              onClick: () => {},
             }}
           />
-        </Box>
+        </Stack>
       </Modal>
-    </Box>
+    </>
   );
 };
 

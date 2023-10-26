@@ -31,7 +31,7 @@ const SignupPage = () => {
           {currentStep === StepEnum.Payment && <PurchaseForm goToNextStep={() => setCurrentStep(StepEnum.Address)} />}
 
           {currentStep === StepEnum.Address && (
-            <AddressForm goToNextStep={() => setCurrentStep(StepEnum.Finalization)} />
+            <AddressForm submitButton={{ content: "Next", onClick: () => setCurrentStep(StepEnum.Finalization) }} />
           )}
 
           {currentStep === StepEnum.Finalization && <Payment />}
