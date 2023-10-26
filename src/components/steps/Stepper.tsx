@@ -1,5 +1,14 @@
 import React from "react";
-import { Stepper as StepperMui, Step, StepLabel, Box, Typography, StepConnector, stepConnectorClasses, styled } from "@mui/material";
+import {
+  Stepper as StepperMui,
+  Step,
+  StepLabel,
+  Box,
+  Typography,
+  StepConnector,
+  stepConnectorClasses,
+  styled,
+} from "@mui/material";
 import { COLORS } from "../../style/colors";
 
 export enum StepEnum {
@@ -15,32 +24,33 @@ export const steps: number[] = Object.values(StepEnum)
 
 interface StepperProps {
   currentStep: StepEnum;
+  setCurrentStep?: (step: StepEnum) => void;
 }
 
-const Connector = styled(StepConnector)(() => ({
-  [`&.${stepConnectorClasses.alternativeLabel}`]: {
-    top: 15,
-    left: 'calc(-50% + 16px)',
-    right: 'calc(50% + 16px)',
-  },
-  [`&.${stepConnectorClasses.active}`]: {
-    [`& .${stepConnectorClasses.line}`]: {
-      borderColor: COLORS.enabled,
+const Stepper = ({ currentStep, setCurrentStep }: StepperProps) => {
+  const Connector = styled(StepConnector)(() => ({
+    [`&.${stepConnectorClasses.alternativeLabel}`]: {
+      top: 15,
+      left: "calc(-50% + 16px)",
+      right: "calc(50% + 16px)",
     },
-  },
-  [`&.${stepConnectorClasses.completed}`]: {
-    [`& .${stepConnectorClasses.line}`]: {
-      borderColor: COLORS.enabled,
+    [`&.${stepConnectorClasses.active}`]: {
+      [`& .${stepConnectorClasses.line}`]: {
+        borderColor: COLORS.enabled,
+      },
     },
-  },
-  [`& .${stepConnectorClasses.line}`]: {
-    borderColor: COLORS.muted,
-    borderTopWidth: 2,
-    borderRadius: 1,
-  },
-}));
+    [`&.${stepConnectorClasses.completed}`]: {
+      [`& .${stepConnectorClasses.line}`]: {
+        borderColor: COLORS.enabled,
+      },
+    },
+    [`& .${stepConnectorClasses.line}`]: {
+      borderColor: COLORS.muted,
+      borderTopWidth: 2,
+      borderRadius: 1,
+    },
+  }));
 
-const Stepper = ({ currentStep }: StepperProps) => {
   return (
     <StepperMui
       activeStep={currentStep}
@@ -48,14 +58,12 @@ const Stepper = ({ currentStep }: StepperProps) => {
       connector={<Connector />}
       sx={{
         "&.MuiStepper-root": {
-          width: "100% !important"
-        }
+          width: "100% !important",
+        },
       }}
     >
       {steps.map((step) => (
-        <Step
-          key={step}
-        >
+        <Step key={step}>
           <StepLabel
             icon={
               <Box
@@ -73,10 +81,12 @@ const Stepper = ({ currentStep }: StepperProps) => {
                 }}
               >
                 <Typography
+                  onClick={() => !!setCurrentStep && currentStep > step && setCurrentStep(step)}
                   sx={{
                     textAlign: "center",
                     fontSize: "20px",
                     fontWeight: 600,
+                    cursor: !!setCurrentStep && currentStep > step ? "pointer" : "default",
                   }}
                 >
                   {step + 1}
