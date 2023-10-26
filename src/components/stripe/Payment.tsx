@@ -17,6 +17,15 @@ const Payment = () => {
     clientSecret: clientSecret?.client_secret,
     appearance: {
       theme: "stripe",
+      rules: {
+        ".Tab, .Input": {
+          borderRadius: "10px",
+          backgroundColor: "#FFF",
+          fontSize: "16px",
+          padding: "16.5px 14px",
+          boxShadow: "0px 1px 1px rgba(0, 0, 0, 0.03), 0px 3px 6px rgba(18, 42, 66, 0.02)",
+        },
+      },
     },
   };
 
@@ -43,7 +52,6 @@ const Payment = () => {
   React.useEffect(() => {
     getClientSecret();
   }, []);
-
 
   return isLoading ? (
     <CircularProgress />

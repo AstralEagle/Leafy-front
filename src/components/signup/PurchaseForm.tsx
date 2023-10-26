@@ -4,13 +4,19 @@ import { Box, Divider, FormControlLabel, Radio, Typography } from "@mui/material
 import { COLORS } from "../../style/colors";
 import { BasicButton } from "../button/Button";
 import { AMOUNT_TTC, AMOUNT_WITHOUT_TAXES, UNIT } from "../../amount";
+import useCreateAccountStore from "../../hooks/zustand/CreateAccountStore";
 
 interface PurchaseFormProps {
   goToNextStep: () => void;
 }
 
 const PurchaseForm = ({ goToNextStep }: PurchaseFormProps) => {
-  const handleSubmit = () => goToNextStep();
+  const { setPurchase } = useCreateAccountStore((state) => state);
+
+  const handleSubmit = () => {
+    setPurchase({ confirmed: true });
+    goToNextStep();
+  };
 
   return (
     <Box>
@@ -34,16 +40,16 @@ const PurchaseForm = ({ goToNextStep }: PurchaseFormProps) => {
               You are about to purchase :
             </Typography>
 
-            <FormControlLabel 
+            <FormControlLabel
               value="end"
-              control={<Radio checked />} 
+              control={<Radio checked />}
               label=" 20 Go of storage"
               sx={{
                 ".MuiTypography-root": {
                   color: COLORS.darkGrey,
                   textAlign: "center",
                   fontSize: "20px",
-                }
+                },
               }}
             />
 
@@ -56,7 +62,10 @@ const PurchaseForm = ({ goToNextStep }: PurchaseFormProps) => {
               }}
             >
               <Typography>Subtotal</Typography>
-              <Typography>{AMOUNT_WITHOUT_TAXES.toFixed(2)}{UNIT}</Typography>
+              <Typography>
+                {AMOUNT_WITHOUT_TAXES.toFixed(2)}
+                {UNIT}
+              </Typography>
             </Box>
 
             <Box
@@ -66,7 +75,10 @@ const PurchaseForm = ({ goToNextStep }: PurchaseFormProps) => {
               }}
             >
               <Typography sx={{ fontWeight: 600 }}>Total</Typography>
-              <Typography>{AMOUNT_TTC.toFixed(2)}{UNIT}</Typography>
+              <Typography>
+                {AMOUNT_TTC.toFixed(2)}
+                {UNIT}
+              </Typography>
             </Box>
           </Box>
         }
