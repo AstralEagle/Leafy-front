@@ -29,7 +29,7 @@ const OrderSummary = () => {
       direction="column"
       gap={2}
       sx={{
-        minWidth: "335px",
+        width: "335px",
         maxWidth: "100%",
       }}
     >
@@ -39,6 +39,7 @@ const OrderSummary = () => {
           color: COLORS.deepBlue,
           fontSize: "30px",
           fontWeight: 500,
+          mb: 0,
         }}
       >
         Order Summary

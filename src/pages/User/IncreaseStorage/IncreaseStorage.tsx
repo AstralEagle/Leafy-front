@@ -1,67 +1,57 @@
 import { Box, Stack } from "@mui/material";
-import HangarFullBackground from "../../../assets/images/hangarFull.svg";
 import * as React from "react";
 import Stepper from "./Stepper";
 import Card from "../../../components/container/Card";
 import OrderSummary from "./OrderSummary";
 import { COLORS } from "../../../style/colors";
+import HangarFullLayout from "../../../layouts/HangarFullLayout";
+
+// TODO
+// NAVBAR
+
+// SESSION -> token
+
+// BLOQUER URL si connecté en USER, en ADMIN, pas connecté
 
 const IncreaseStorage = () => {
   return (
-    <Box
-      sx={{
-        background: `url(${HangarFullBackground}) center`,
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
-        position: "absolute",
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        padding: "2rem 4rem",
-      }}
-    >
-      <Box
-        sx={{
-          background: "#FBF9F9",
-          backgroundSize: "cover",
-          position: "absolute",
-          top: 0,
-          height: "100%",
-          left: 0,
-          right: 0,
-          bottom: 0,
-          zIndex: -1,
-        }}
-      />
-      <Box sx={{ padding: "2rem" }}>
-        <Box
-          component="h1"
-          sx={{
-            color: COLORS.deepBlue,
-            fontSize: "26px",
-            fontWeight: 500,
-            pb: "2rem",
-          }}
-        >
-          Increase your storage space to keep your data safe.
-        </Box>
-        <Stack direction="row" justifyContent={"space-between"}>
+    <HangarFullLayout
+      content={
+        <Stack direction="column" justifyContent="space-around" sx={{ padding: "2rem" }}>
           <Stack
-            width={{
-              xs: "100%",
-              md: "50%",
-              lg: "60%",
+            direction={{
+              xs: "column-reverse",
+              md: "row",
             }}
+            alignItems={"center"}
+            gap={2}
+            justifyContent={"space-around"}
           >
-            <Stepper />
-          </Stack>
-          <Box sx={{ position: "sticky" }}>
+            <Stack
+              width={{
+                xs: "100%",
+                md: "50%",
+                lg: "60%",
+              }}
+            >
+              <Box
+                component="h1"
+                sx={{
+                  color: COLORS.deepBlue,
+                  fontSize: "26px",
+                  fontWeight: 500,
+                  pb: "2rem",
+                }}
+              >
+                Increase your storage space to keep your data safe.
+              </Box>
+              <Stepper />
+            </Stack>
             <Card content={<OrderSummary />} />
-          </Box>
+          </Stack>
         </Stack>
-      </Box>
-    </Box>
+      }
+    />
   );
 };
 

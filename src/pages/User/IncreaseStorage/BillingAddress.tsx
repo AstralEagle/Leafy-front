@@ -16,7 +16,7 @@ const BillingAddress = () => {
   };
 
   return (
-    <>
+    <Box maxWidth={"90%"}>
       <Card
         fullWidth
         content={
@@ -79,7 +79,7 @@ const BillingAddress = () => {
           />
         </Stack>
       </Modal>
-    </>
+    </Box>
   );
 };
 

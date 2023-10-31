@@ -81,6 +81,7 @@ const CheckoutForm = ({ stripe, elements, clientSecret }: CheckoutFormProps) => 
       sx={{
         mb: "2rem",
         width: "100%",
+        maxWidth: "100%",
       }}
     >
       <BasicLabel content="CardNumber" />
@@ -95,7 +96,10 @@ const CheckoutForm = ({ stripe, elements, clientSecret }: CheckoutFormProps) => 
         }
       />
       <Stack
-        direction="row"
+        direction={{
+          xs: "column",
+          md: "row",
+        }}
         sx={{
           gap: 2,
           mb: 2,
@@ -130,7 +134,10 @@ const CheckoutForm = ({ stripe, elements, clientSecret }: CheckoutFormProps) => 
       </Stack>
 
       <Stack
-        direction="row"
+        direction={{
+          xs: "column",
+          md: "row",
+        }}
         sx={{
           gap: 2,
           mb: 4,
@@ -169,7 +176,7 @@ const CheckoutForm = ({ stripe, elements, clientSecret }: CheckoutFormProps) => 
             <CircularProgress size={20} />
           </Box>
         ) : (
-          "Proceed to payment"
+          "Pay now"
         )}
       </BasicButton>
 

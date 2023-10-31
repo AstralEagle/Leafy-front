@@ -6,7 +6,7 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { blue, brown } from "./style/colors/colors";
 import Root from './routes/Root';
 
-const theme = createTheme({
+export const theme = createTheme({
   palette: {
     primary: {
       main: blue[500],
@@ -17,16 +17,14 @@ const theme = createTheme({
   },
 });
 
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
-);
+const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 
 root.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <Root />
     </ThemeProvider>
-  </React.StrictMode>
+  </React.StrictMode>,
 );
 
 // If you want to start measuring performance in your app, pass a function
