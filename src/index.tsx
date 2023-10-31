@@ -6,7 +6,7 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { blue, brown } from "./style/colors/colors";
 import Root from './routes/Root';
 
-const theme = createTheme({
+export const theme = createTheme({
   palette: {
     primary: {
       main: blue[500],
