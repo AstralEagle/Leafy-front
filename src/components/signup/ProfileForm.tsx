@@ -5,10 +5,13 @@ import { BasicButton } from "../button/Button";
 import useCreateAccountStore from "../../hooks/zustand/CreateAccountStore";
 
 interface ProfileFormProps {
-  goToNextStep: () => void;
+  submitButton: {
+    content: string;
+    onClick: () => void;
+  };
 }
 
-export const ProfileForm = ({ goToNextStep }: ProfileFormProps) => {
+export const ProfileForm = ({ submitButton }: ProfileFormProps) => {
   const { profile, setProfile } = useCreateAccountStore((state) => ({
     profile: state.account.profile,
     setProfile: state.setProfile,
@@ -24,8 +27,6 @@ export const ProfileForm = ({ goToNextStep }: ProfileFormProps) => {
     });
   };
 
-  const handleSubmit = () => goToNextStep();
-
   const isSubmitBtnDisabled =
     !profile.email.length || !profile.password.length || !profile.firstName.length || !profile.lastName.length;
 
@@ -35,11 +36,16 @@ export const ProfileForm = ({ goToNextStep }: ProfileFormProps) => {
       direction="column"
       useFlexGap
       flexWrap="wrap"
-      justifyContent={"space-between"}
-      alignItems={"center"}
+      justifyContent="space-between"
+      alignItems="center"
+      sx={{
+        ".MuiOutlinedInput-input": {
+          minWidth: "45vw",
+        },
+      }}
     >
       <InputWithLabel
-        label={"First Name"}
+        label="First Name"
         type="text"
         placeholder="John"
         value={profile.firstName}
@@ -47,7 +53,7 @@ export const ProfileForm = ({ goToNextStep }: ProfileFormProps) => {
       />
 
       <InputWithLabel
-        label={"Last Name"}
+        label="Last Name"
         type="text"
         placeholder="Dubois"
         value={profile.lastName}
@@ -55,7 +61,7 @@ export const ProfileForm = ({ goToNextStep }: ProfileFormProps) => {
       />
 
       <InputWithLabel
-        label={"Email"}
+        label="Email"
         type="email"
         placeholder="johndubois06@mail.com"
         value={profile.email}
@@ -63,7 +69,7 @@ export const ProfileForm = ({ goToNextStep }: ProfileFormProps) => {
       />
 
       <InputWithLabel
-        label={"Password"}
+        label="Password"
         type="password"
         placeholder="********"
         value={profile.password}
@@ -78,8 +84,8 @@ export const ProfileForm = ({ goToNextStep }: ProfileFormProps) => {
           my: 2,
         }}
       >
-        <BasicButton disabled={isSubmitBtnDisabled} onClick={handleSubmit}>
-          Next
+        <BasicButton disabled={isSubmitBtnDisabled} onClick={submitButton.onClick}>
+          {submitButton.content}
         </BasicButton>
       </Box>
     </Stack>

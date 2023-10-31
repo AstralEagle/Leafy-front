@@ -26,7 +26,9 @@ const SignupPage = () => {
 
           <Stepper currentStep={currentStep} setCurrentStep={setCurrentStep} />
 
-          {currentStep === StepEnum.Profile && <ProfileForm goToNextStep={() => setCurrentStep(StepEnum.Payment)} />}
+          {currentStep === StepEnum.Profile && (
+            <ProfileForm submitButton={{ onClick: () => setCurrentStep(StepEnum.Payment), content: "Next" }} />
+          )}
 
           {currentStep === StepEnum.Payment && <PurchaseForm goToNextStep={() => setCurrentStep(StepEnum.Address)} />}
 
