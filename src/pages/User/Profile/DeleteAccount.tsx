@@ -1,8 +1,7 @@
 import * as React from "react";
-import { Box, Button, IconButton, Modal, Stack, Tooltip, Typography } from "@mui/material";
+import { Button, IconButton, Modal, Stack, Tooltip, Typography } from "@mui/material";
 import { COLORS } from "../../../style/colors";
 import { Close, Error } from "@mui/icons-material";
-import AddressForm from "../../../components/signup/AddressForm";
 import { BasicButton } from "../../../components/button/Button";
 
 export const DeleteAccount = () => {
@@ -21,6 +20,7 @@ export const DeleteAccount = () => {
           color: COLORS.redBrown,
           textTransform: "unset",
           fontWeight: 600,
+          padding: "1rem 2rem",
         }}
       >
         Delete your account

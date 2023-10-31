@@ -7,13 +7,14 @@ import DeleteAccount from "../../pages/User/Profile/DeleteAccount";
 
 interface ProfileFormProps {
   displayDeleteAccount?: boolean;
+  minWidth?: number;
   submitButton: {
     content: string;
     onClick: () => void;
   };
 }
 
-export const ProfileForm = ({ submitButton, displayDeleteAccount }: ProfileFormProps) => {
+export const ProfileForm = ({ submitButton, displayDeleteAccount, minWidth = 45 }: ProfileFormProps) => {
   const { profile, setProfile } = useCreateAccountStore((state) => ({
     profile: state.account.profile,
     setProfile: state.setProfile,
@@ -42,7 +43,7 @@ export const ProfileForm = ({ submitButton, displayDeleteAccount }: ProfileFormP
       alignItems="center"
       sx={{
         ".MuiOutlinedInput-input": {
-          minWidth: "45vw",
+          minWidth: minWidth + "vw",
         },
       }}
     >
@@ -82,6 +83,7 @@ export const ProfileForm = ({ submitButton, displayDeleteAccount }: ProfileFormP
         sx={{
           display: "flex",
           justifyContent: displayDeleteAccount ? "space-between" : "flex-end",
+          alignItems: "center",
           width: "100%",
           my: 2,
         }}

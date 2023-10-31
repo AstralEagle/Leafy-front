@@ -11,9 +11,7 @@ const BillingAddress = () => {
 
   const [isModalOpened, setIsModalOpened] = React.useState<boolean>(false);
 
-  const handleClose = () => {
-    setIsModalOpened(false);
-  };
+  const handleClose = () => setIsModalOpened(false);
 
   return (
     <Box maxWidth={"90%"}>

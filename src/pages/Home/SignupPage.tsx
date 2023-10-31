@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Stack } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import SignupTitle from "../../components/signup/SignupTitle";
 import ProfileForm from "../../components/signup/ProfileForm";
 import HomeLayout from "../../layouts/HomeLayout";
@@ -27,7 +27,10 @@ const SignupPage = () => {
           <Stepper currentStep={currentStep} setCurrentStep={setCurrentStep} />
 
           {currentStep === StepEnum.Profile && (
-            <ProfileForm submitButton={{ onClick: () => setCurrentStep(StepEnum.Payment), content: "Next" }} />
+            <ProfileForm
+              minWidth={20}
+              submitButton={{ onClick: () => setCurrentStep(StepEnum.Payment), content: "Next" }}
+            />
           )}
 
           {currentStep === StepEnum.Payment && <PurchaseForm goToNextStep={() => setCurrentStep(StepEnum.Address)} />}
