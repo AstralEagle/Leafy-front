@@ -1,7 +1,17 @@
 import * as React from "react";
 import Menu from "./Menu";
 import ProfileForm from "../../../components/signup/ProfileForm";
-import { Box, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { COLORS } from "../../../style/colors";
 import { AccountCircleOutlined, ExitToAppOutlined, ReceiptLong } from "@mui/icons-material";
 
@@ -127,6 +137,7 @@ const Profile = () => {
           </Box>
           {selectedTab === TabEnum.Profile && (
             <ProfileForm
+              displayDeleteAccount
               submitButton={{
                 onClick: () => {}, // TODO : update profile
                 content: "Save",

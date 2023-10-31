@@ -3,15 +3,17 @@ import { Box, Stack } from "@mui/material";
 import InputWithLabel from "../form/InputWithLabel";
 import { BasicButton } from "../button/Button";
 import useCreateAccountStore from "../../hooks/zustand/CreateAccountStore";
+import DeleteAccount from "../../pages/User/Profile/DeleteAccount";
 
 interface ProfileFormProps {
+  displayDeleteAccount?: boolean;
   submitButton: {
     content: string;
     onClick: () => void;
   };
 }
 
-export const ProfileForm = ({ submitButton }: ProfileFormProps) => {
+export const ProfileForm = ({ submitButton, displayDeleteAccount }: ProfileFormProps) => {
   const { profile, setProfile } = useCreateAccountStore((state) => ({
     profile: state.account.profile,
     setProfile: state.setProfile,
@@ -79,11 +81,12 @@ export const ProfileForm = ({ submitButton }: ProfileFormProps) => {
       <Box
         sx={{
           display: "flex",
-          justifyContent: "flex-end",
+          justifyContent: displayDeleteAccount ? "space-between" : "flex-end",
           width: "100%",
           my: 2,
         }}
       >
+        {displayDeleteAccount && <DeleteAccount />}
         <BasicButton disabled={isSubmitBtnDisabled} onClick={submitButton.onClick}>
           {submitButton.content}
         </BasicButton>

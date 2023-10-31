@@ -47,6 +47,8 @@ export const navbarBg = "#D9D9D9";
 export const cellBlue = "#7A8F9E";
 export const lightestGrey = "#E9E5DB";
 export const basicGrey = "#FBF9F9";
+export const redBrown = "#520202a1";
+export const redBrownDark = "#520202b3";
 
 // ADMIN
 export const darkestOrange = "#FF5833";
