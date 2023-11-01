@@ -34,9 +34,7 @@ const Payment = () => {
       const response = await axios({
         method: "post",
         url: API_URL + "/payment/secret",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
         data: {},
       });
 

@@ -7,6 +7,8 @@ import useCreateAccountStore from "../../hooks/zustand/CreateAccountStore";
 import { CARD_NUMBER_OPTIONS, CARD_EXPIRY_OPTIONS, CARD_CVC_OPTIONS } from "./CardElements";
 import InputWithLabel from "../form/InputWithLabel";
 import { COLORS } from "../../style/colors";
+import { API_URL } from "../../routes/Url";
+import axios from "axios";
 
 interface CheckoutFormProps {
   stripe: any;
@@ -15,7 +17,6 @@ interface CheckoutFormProps {
 }
 
 // TODO:
-// session token
 // verifier le format email et telephone
 
 const CheckoutForm = ({ stripe, elements, clientSecret }: CheckoutFormProps) => {
@@ -42,7 +43,7 @@ const CheckoutForm = ({ stripe, elements, clientSecret }: CheckoutFormProps) => 
 
     setIsLoading(true);
 
-    const { error } = await stripe.confirmCardPayment(clientSecret.client_secret, {
+    const { status, error } = await stripe.confirmCardPayment(clientSecret.client_secret, {
       payment_method: {
         card: elements.getElement(CardNumberElement),
         billing_details: {
@@ -62,6 +63,29 @@ const CheckoutForm = ({ stripe, elements, clientSecret }: CheckoutFormProps) => 
     if (error) {
       setErrorMessage(error.message);
     } else {
+      if (status === "succeeded") {
+        try {
+          const response = await axios({
+            method: "post",
+            url: API_URL + "/auth/signup",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            data: {
+              ...profile,
+              adresse: {
+                codePostal: address.zipCode,
+                country: address.country.label,
+                ville: address.city,
+                voie: address.street,
+              },
+            },
+          });
+          console.log(response);
+          // TODO : stocker la session
+        } catch (err) {
+          console.log(err);
+          // TODO : handle error + toast
+        }
+      }
     }
 
     setIsLoading(false);
