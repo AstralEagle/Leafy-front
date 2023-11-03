@@ -43,7 +43,7 @@ const CheckoutForm = ({ stripe, elements, clientSecret }: CheckoutFormProps) => 
 
     setIsLoading(true);
 
-    const { status, error } = await stripe.confirmCardPayment(clientSecret.client_secret, {
+    const { error } = await stripe.confirmCardPayment(clientSecret.client_secret, {
       payment_method: {
         card: elements.getElement(CardNumberElement),
         billing_details: {
@@ -63,28 +63,28 @@ const CheckoutForm = ({ stripe, elements, clientSecret }: CheckoutFormProps) => 
     if (error) {
       setErrorMessage(error.message);
     } else {
-      if (status === "succeeded") {
-        try {
-          const response = await axios({
-            method: "post",
-            url: API_URL + "/auth/signup",
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            data: {
-              ...profile,
-              adresse: {
-                codePostal: address.zipCode,
-                country: address.country.label,
-                ville: address.city,
-                voie: address.street,
-              },
-            },
-          });
-          console.log(response);
-          // TODO : stocker la session
-        } catch (err) {
-          console.log(err);
-          // TODO : handle error + toast
-        }
+      try {
+        const billingAddress = {
+          zip: address.zipCode,
+          country: address.country.code,
+          city: address.city,
+          address: address.street,
+        };
+
+        const response = await axios({
+          method: "post",
+          url: API_URL + "/auth/signup",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          data: {
+            ...profile,
+            ...billingAddress,
+          },
+        });
+        console.log(response);
+        // TODO : stocker la session
+      } catch (err) {
+        console.log(err);
+        // TODO : handle error + toast
       }
     }
 
