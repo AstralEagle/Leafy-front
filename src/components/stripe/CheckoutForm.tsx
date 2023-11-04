@@ -9,6 +9,8 @@ import InputWithLabel from "../form/InputWithLabel";
 import { COLORS } from "../../style/colors";
 import { API_URL } from "../../routes/Url";
 import axios from "axios";
+import { isTokenValid } from "../../Config/Auth";
+import { useNavigate } from "react-router-dom";
 
 interface CheckoutFormProps {
   stripe: any;
@@ -20,6 +22,7 @@ interface CheckoutFormProps {
 // verifier le format email et telephone
 
 const CheckoutForm = ({ stripe, elements, clientSecret }: CheckoutFormProps) => {
+  const navigate = useNavigate();
   const { address, profile } = useCreateAccountStore((state) => state.account);
 
   const [billingEmail, setBillingEmail] = React.useState<string>(profile.email);
@@ -80,8 +83,9 @@ const CheckoutForm = ({ stripe, elements, clientSecret }: CheckoutFormProps) => 
             ...billingAddress,
           },
         });
-        console.log(response);
-        // TODO : stocker la session
+
+        localStorage.setItem("token", response.data.userToken.toString());
+        isTokenValid() ? navigate("/dashboard") : navigate("/login");
       } catch (err) {
         console.log(err);
         // TODO : handle error + toast

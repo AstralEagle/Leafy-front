@@ -1,12 +1,14 @@
 import * as React from "react";
 import { LockOutlined, PersonOutline } from "@mui/icons-material";
-import { Alert, Stack } from "@mui/material";
+import { Alert, Box, Stack } from "@mui/material";
 import InputWithIcon from "../form/InputWithIcon";
 import { BasicButton, LoadingButton } from "../button/Button";
 import NoAccountLink from "./NoAccountLink";
 import axios from "axios";
 import { API_URL } from "../../routes/Url";
 import { isTokenValid } from "../../Config/Auth";
+import { isToken } from "typescript";
+import { Navigate, useNavigate } from "react-router-dom";
 
 interface LoginApi {
   email: string;
@@ -14,6 +16,8 @@ interface LoginApi {
 }
 
 export const LoginForm = () => {
+  const navigate = useNavigate();
+
   const [isSubmitting, setIsSubmitting] = React.useState<boolean>(false);
   const [errorMessage, setErrorMessage] = React.useState<string>("");
 
@@ -43,12 +47,17 @@ export const LoginForm = () => {
         data: { ...account },
       });
 
-      localStorage.setItem("token", response.data.userToken);
-      setIsSubmitting(false);
-      setErrorMessage("");
+      localStorage.setItem("token", response.data.userToken.toString());
+
+      if (isTokenValid()) {
+        navigate("/dashboard");
+      } else {
+        setIsSubmitting(false);
+        setErrorMessage("The authentication failed. Please, try again.");
+      }
     } catch (e: any) {
       setIsSubmitting(false);
-      setErrorMessage(e.message);
+      setErrorMessage("The authentication failed. Make sure you're using the right credentials.");
     }
   };
 
@@ -63,12 +72,6 @@ export const LoginForm = () => {
       justifyContent={"space-between"}
       alignItems={"center"}
     >
-      {!!errorMessage && (
-        <Alert severity="error" sx={{ mt: 1 }}>
-          {errorMessage}
-        </Alert>
-      )}
-
       <InputWithIcon
         StartIcon={PersonOutline}
         type="email"
@@ -83,6 +86,8 @@ export const LoginForm = () => {
         placeholder="Password"
         onChange={(e) => handleChange(e, "password")}
       />
+
+      {!!errorMessage && <Alert severity="warning">{errorMessage}</Alert>}
 
       {isSubmitting ? (
         <LoadingButton />

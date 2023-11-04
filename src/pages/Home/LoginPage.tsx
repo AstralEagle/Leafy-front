@@ -1,6 +1,7 @@
-import React from "react";
+import * as React from "react";
 import { Stack } from "@mui/material";
-import LoginTitle from "../../components/login/LoginTitle";
+import { COLORS } from "../../style/colors";
+import { Typography } from "@mui/material";
 import LoginForm from "../../components/login/LoginForm";
 import HomeLayout from "../../layouts/HomeLayout";
 
@@ -16,7 +17,22 @@ const LoginPage = () => {
           justifyContent={"space-between"}
           alignItems={"center"}
         >
-          <LoginTitle />
+          <Typography
+            component="h2"
+            sx={{
+              span: {
+                fontSize: "40px",
+                fontWeight: 600,
+              },
+            }}
+          >
+            <Typography component="span" sx={{ color: COLORS.deepBlue }}>
+              Welcome
+            </Typography>{" "}
+            <Typography component="span" sx={{ color: COLORS.yellow }}>
+              back
+            </Typography>
+          </Typography>
           <LoginForm />
         </Stack>
       }

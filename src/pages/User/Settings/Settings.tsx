@@ -10,7 +10,7 @@ enum TabEnum {
   OrderHistory,
 }
 
-const Profile = () => {
+const Settings = () => {
   const [selectedTab, setSelectedTab] = React.useState<TabEnum>(TabEnum.Profile);
   const items = [
     {
@@ -140,4 +140,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default Settings;

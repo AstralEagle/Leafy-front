@@ -11,7 +11,7 @@ const NotFound = () => {
       content={
         <>
           <h2>Oops!</h2>
-          <p>Sorry, the page was not found.</p>
+          <p>Sorry, the page is not found.</p>
           <Button color="secondary" onClick={() => navigate("/")}>
             Go to home page
           </Button>
