@@ -11,14 +11,14 @@ const NotFound = () => {
       content={
         <>
           <h2>Oops!</h2>
-          <p>Sorry, the page is not found.</p>
-          <Button color="secondary" onClick={() => navigate("/")}>
-            Go to home page
+          <p>You are not allowed to access this page.</p>
+          <Button color="secondary" onClick={() => navigate(-1)}>
+            Back to home
           </Button>
         </>
       }
     />
   );
-}
+};
 
 export default NotFound;

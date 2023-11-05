@@ -3,7 +3,7 @@ import { Box, Stack } from "@mui/material";
 import InputWithLabel from "../form/InputWithLabel";
 import { BasicButton } from "../button/Button";
 import useCreateAccountStore from "../../hooks/zustand/CreateAccountStore";
-import DeleteAccount from "../../pages/User/Profile/DeleteAccount";
+import DeleteAccount from "../../pages/User/Settings/DeleteAccount";
 
 interface ProfileFormProps {
   displayDeleteAccount?: boolean;
@@ -41,11 +41,7 @@ export const ProfileForm = ({ submitButton, displayDeleteAccount, minWidth = 45 
       flexWrap="wrap"
       justifyContent="space-between"
       alignItems="center"
-      sx={{
-        ".MuiOutlinedInput-input": {
-          minWidth: minWidth + "vw",
-        },
-      }}
+      sx={{ ".MuiOutlinedInput-input": { minWidth: minWidth + "vw" } }}
     >
       <InputWithLabel
         label="First Name"

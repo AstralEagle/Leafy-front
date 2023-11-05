@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Box, Stack } from "@mui/material";
+import { Stack } from "@mui/material";
 import SignupTitle from "../../components/signup/SignupTitle";
 import ProfileForm from "../../components/signup/ProfileForm";
 import HomeLayout from "../../layouts/HomeLayout";

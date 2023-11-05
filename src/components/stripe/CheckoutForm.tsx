@@ -7,6 +7,10 @@ import useCreateAccountStore from "../../hooks/zustand/CreateAccountStore";
 import { CARD_NUMBER_OPTIONS, CARD_EXPIRY_OPTIONS, CARD_CVC_OPTIONS } from "./CardElements";
 import InputWithLabel from "../form/InputWithLabel";
 import { COLORS } from "../../style/colors";
+import { API_URL } from "../../routes/Url";
+import axios from "axios";
+import { isTokenValid } from "../../Config/Auth";
+import { useNavigate } from "react-router-dom";
 
 interface CheckoutFormProps {
   stripe: any;
@@ -15,10 +19,10 @@ interface CheckoutFormProps {
 }
 
 // TODO:
-// session token
 // verifier le format email et telephone
 
 const CheckoutForm = ({ stripe, elements, clientSecret }: CheckoutFormProps) => {
+  const navigate = useNavigate();
   const { address, profile } = useCreateAccountStore((state) => state.account);
 
   const [billingEmail, setBillingEmail] = React.useState<string>(profile.email);
@@ -62,6 +66,30 @@ const CheckoutForm = ({ stripe, elements, clientSecret }: CheckoutFormProps) => 
     if (error) {
       setErrorMessage(error.message);
     } else {
+      try {
+        const billingAddress = {
+          zip: address.zipCode,
+          country: address.country.code,
+          city: address.city,
+          address: address.street,
+        };
+
+        const response = await axios({
+          method: "post",
+          url: API_URL + "/auth/signup",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          data: {
+            ...profile,
+            ...billingAddress,
+          },
+        });
+
+        localStorage.setItem("token", response.data.userToken.toString());
+        isTokenValid() ? (window.location.pathname = "dashboard") : navigate("/login");
+      } catch (err) {
+        console.log(err);
+        // TODO : handle error + toast
+      }
     }
 
     setIsLoading(false);

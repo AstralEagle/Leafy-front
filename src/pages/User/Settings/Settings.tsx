@@ -4,13 +4,15 @@ import ProfileForm from "../../../components/signup/ProfileForm";
 import { Box, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Stack, Typography } from "@mui/material";
 import { COLORS } from "../../../style/colors";
 import { AccountCircleOutlined, ExitToAppOutlined, ReceiptLong } from "@mui/icons-material";
+import Invoices from "../../../components/settings/Invoices";
+import { logout } from "../../../Config/Auth";
 
 enum TabEnum {
   Profile,
   OrderHistory,
 }
 
-const Profile = () => {
+const Settings = () => {
   const [selectedTab, setSelectedTab] = React.useState<TabEnum>(TabEnum.Profile);
   const items = [
     {
@@ -82,6 +84,7 @@ const Profile = () => {
               <List>
                 <ListItem sx={{ mb: "2rem" }}>
                   <ListItemButton
+                    onClick={logout}
                     sx={{
                       padding: "1rem 1.5rem",
                       mb: "2rem",
@@ -134,10 +137,11 @@ const Profile = () => {
               }}
             />
           )}
+          {selectedTab === TabEnum.OrderHistory && <Invoices />}
         </Stack>
       </Stack>
     </Box>
   );
 };
 
-export default Profile;
+export default Settings;

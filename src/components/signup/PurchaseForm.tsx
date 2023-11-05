@@ -19,7 +19,14 @@ const PurchaseForm = ({ goToNextStep }: PurchaseFormProps) => {
   };
 
   return (
-    <Box>
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "space-around",
+        flexDirection: "column",
+        gap: "4rem",
+      }}
+    >
       <Card
         content={
           <Box
@@ -27,7 +34,8 @@ const PurchaseForm = ({ goToNextStep }: PurchaseFormProps) => {
               display: "flex",
               justifyContent: "space-around",
               flexDirection: "column",
-              gap: 2,
+              minHeight: "20rem",
+              gap: "1rem",
             }}
           >
             <Typography

@@ -4,15 +4,16 @@ import * as React from "react";
 import { COLORS } from "../../../style/colors";
 
 const OrderSummary = () => {
+
   const advantages: string[] = ["Access to your data", "Increase your storage", "Smooth interface"];
   const items: { label: string; price: string }[] = [
     {
       label: "20 GO of storage",
-      price: "19.00 €",
+      price: "15.28 €",
     },
     {
       label: "Taxes",
-      price: "1.00 €",
+      price: "5.62 €",
     },
     {
       label: "Subtotal",
