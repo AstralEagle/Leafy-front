@@ -134,6 +134,7 @@ const Settings = () => {
               }}
             />
           )}
+          {selectedTab === TabEnum.OrderHistory && <Box></Box>}
         </Stack>
       </Stack>
     </Box>

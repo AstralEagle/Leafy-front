@@ -1,14 +1,13 @@
 import * as React from "react";
 import { LockOutlined, PersonOutline } from "@mui/icons-material";
-import { Alert, Box, Stack } from "@mui/material";
+import { Alert, Stack } from "@mui/material";
 import InputWithIcon from "../form/InputWithIcon";
 import { BasicButton, LoadingButton } from "../button/Button";
 import NoAccountLink from "./NoAccountLink";
 import axios from "axios";
 import { API_URL } from "../../routes/Url";
 import { isTokenValid } from "../../Config/Auth";
-import { isToken } from "typescript";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 interface LoginApi {
   email: string;
@@ -16,8 +15,6 @@ interface LoginApi {
 }
 
 export const LoginForm = () => {
-  const navigate = useNavigate();
-
   const [isSubmitting, setIsSubmitting] = React.useState<boolean>(false);
   const [errorMessage, setErrorMessage] = React.useState<string>("");
 
@@ -50,7 +47,7 @@ export const LoginForm = () => {
       localStorage.setItem("token", response.data.userToken.toString());
 
       if (isTokenValid()) {
-        navigate("/dashboard");
+        window.location.pathname = "/dashboard";
       } else {
         setIsSubmitting(false);
         setErrorMessage("The authentication failed. Please, try again.");
