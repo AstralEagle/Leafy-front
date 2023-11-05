@@ -17,8 +17,6 @@ interface TokenBase {
 export const isTokenValid = () => {
   const token = localStorage.getItem("token");
 
-  console.log(token);
-
   if (!!token) {
     const decodedToken: TokenBase = jwtDecode(token);
     const currentDate = new Date();

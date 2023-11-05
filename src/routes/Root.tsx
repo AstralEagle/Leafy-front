@@ -18,15 +18,10 @@ const Root = () => {
         <Route path="/" element={isUserConnected ? <DashboardPage /> : <LoginPage />} />
         <Route path="/login" element={isUserConnected ? <DashboardPage /> : <LoginPage />} />
         <Route path="/signup" element={isUserConnected ? <DashboardPage /> : <SignupPage />} />
-
-        {isUserConnected && (
-          <>
-            <Route path="/payment" element={<IncreaseStorage />} />
-            <Route path="/dashboard" element={<DashboardPage />} />
-            <Route path="/settings" element={<Settings />} />
-            <Route path="/logout" element={<LoginPage />} />
-          </>
-        )}
+        <Route path="/payment" element={isUserConnected ? <IncreaseStorage /> : <LoginPage />} />
+        <Route path="/dashboard" element={isUserConnected ? <DashboardPage /> : <LoginPage />} />
+        <Route path="/settings" element={isUserConnected ? <Settings /> : <LoginPage />} />
+        {isUserConnected && <Route path="/logout" element={<LoginPage />} />}
 
         <Route path="*" element={<NotFound />} />
       </Routes>

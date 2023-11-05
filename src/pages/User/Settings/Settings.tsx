@@ -4,6 +4,7 @@ import ProfileForm from "../../../components/signup/ProfileForm";
 import { Box, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Stack, Typography } from "@mui/material";
 import { COLORS } from "../../../style/colors";
 import { AccountCircleOutlined, ExitToAppOutlined, ReceiptLong } from "@mui/icons-material";
+import Invoices from "../../../components/settings/Invoices";
 
 enum TabEnum {
   Profile,
@@ -134,7 +135,7 @@ const Settings = () => {
               }}
             />
           )}
-          {selectedTab === TabEnum.OrderHistory && <Box></Box>}
+          {selectedTab === TabEnum.OrderHistory && <Invoices />}
         </Stack>
       </Stack>
     </Box>

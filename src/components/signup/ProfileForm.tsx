@@ -41,11 +41,7 @@ export const ProfileForm = ({ submitButton, displayDeleteAccount, minWidth = 45 
       flexWrap="wrap"
       justifyContent="space-between"
       alignItems="center"
-      sx={{
-        ".MuiOutlinedInput-input": {
-          minWidth: minWidth + "vw",
-        },
-      }}
+      sx={{ ".MuiOutlinedInput-input": { minWidth: minWidth + "vw" } }}
     >
       <InputWithLabel
         label="First Name"
