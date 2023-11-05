@@ -12,7 +12,7 @@ const Card = ({ content }: CardProps) => {
         display: "inline-flex",
         padding: " 48px 48px 75px 33px",
         alignItems: "center",
-        borderRadius: "15px",
+        borderRadius: "10px",
         background: "#FFF",
       }}
     >
