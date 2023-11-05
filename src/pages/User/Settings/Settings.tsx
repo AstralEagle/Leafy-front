@@ -5,6 +5,7 @@ import { Box, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Stack,
 import { COLORS } from "../../../style/colors";
 import { AccountCircleOutlined, ExitToAppOutlined, ReceiptLong } from "@mui/icons-material";
 import Invoices from "../../../components/settings/Invoices";
+import { logout } from "../../../Config/Auth";
 
 enum TabEnum {
   Profile,
@@ -83,6 +84,7 @@ const Settings = () => {
               <List>
                 <ListItem sx={{ mb: "2rem" }}>
                   <ListItemButton
+                    onClick={logout}
                     sx={{
                       padding: "1rem 1.5rem",
                       mb: "2rem",

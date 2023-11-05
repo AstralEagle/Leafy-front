@@ -45,7 +45,6 @@ export const connectedUser = () => {
 };
 
 export const logout = () => {
-  // TODO : requete pour supprimer le token.
   localStorage.removeItem("token");
   window.location.pathname = "/login";
 };

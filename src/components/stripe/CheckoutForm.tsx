@@ -85,7 +85,7 @@ const CheckoutForm = ({ stripe, elements, clientSecret }: CheckoutFormProps) => 
         });
 
         localStorage.setItem("token", response.data.userToken.toString());
-        isTokenValid() ? navigate("/dashboard") : navigate("/login");
+        isTokenValid() ? (window.location.pathname = "dashboard") : navigate("/login");
       } catch (err) {
         console.log(err);
         // TODO : handle error + toast
