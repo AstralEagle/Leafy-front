@@ -8,14 +8,10 @@ import SideBar from "../../components/SideBar/SideBar";
 const Dashboard = () => {
   return (
     <>
-      <SideBar />
-      <DashboardLayout
-    
-    />
-   
+        <SideBar/>
+        <DashboardLayout/>
     </>
-    
-    
+
   );
 };
 

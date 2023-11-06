@@ -43,7 +43,7 @@ export const connectedUser = async () => {
         url: API_URL + "/auth",
         headers: { Authorization: "Bearer " + localStorage.getItem("token") },
       });
-      return currentUser;
+      return currentUser.data;
     } else {
       window.location.pathname = "/login";
     }

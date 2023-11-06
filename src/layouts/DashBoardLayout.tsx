@@ -1,18 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import userIcon from "../assets/icons/users.png";
 import storageIcon from "../assets/icons/storage.png";
 import cloudIcon from "../assets/icons/cloud.png";
-
-import { Outlet } from "react-router-dom";
 // import { baseConfig } from "../../config";
-import {
-  View,
-  Grid,
-  Flex,
-  Card,
-  Placeholder,
-  useTheme,
-} from "@aws-amplify/ui-react";
+import {Card, Flex, Placeholder, useTheme, View,} from "@aws-amplify/ui-react";
 
 import "./DashBoardLayout.css";
 
@@ -20,12 +11,7 @@ import "./DashBoardLayout.css";
 import OverviewUsers from "../pages/DashBoard/Graphs/OverviewUsers";
 
 import CustomersSummary from "../pages/DashBoard/Graphs/CustomersSummary";
-import axios from "axios";
-import { request } from "../Config/request";
-
-
-
-
+import {request} from "../Config/request";
 
 
 export interface LayoutProps {
@@ -80,49 +66,49 @@ const DashboardLayout = () => {
        
         setUserCount(usersCount);
         setStorageCount(storageCount);
-        setUploadedCount(uploadedCount);
-        console.log("number of users : " ,response)
+          setUploadedCount(uploadedCount);
+          console.log("number of users : ", response)
       } catch (error) {
-        console.error('Error fetching users:', error);
+          console.error('Error fetching users:', error);
       }
     };
 
-    fetchUsers();
+      fetchUsers();
   }, []);
 
 
-  
-
-  return ( <>
-   
-
-    <div className="layout-container">
-    
-    
-      <div className="page-container">
-        <div className="welcome-container">Welcome to your administrator space. 
-      
-Here, you can view all the activity on your website.</div>
-
-<div className = "overview-container">Overview
- 
-
-      <div className="grid_list">
-      
-      <View rowSpan={{ base: 1, large: 1 }}>
-  <OverviewUsers
-  title = "utilisateurs au total"
-    amount={userCount !== null ? userCount.toString() : ''}
-    icon={<img src={userIcon} />}
-  />
+    return (
 
 
+        <div className="layout-container">
 
-          </View>
-          <View rowSpan={{ base: 1, large: 1 }}>
-            <OverviewUsers title ="fichiers stockés" amount={storageCount !== null ? storageCount.toString() : ''}  icon =  {<img src={storageIcon}/>} />
-          </View>
-          <View rowSpan={{ base: 1, large: 1 }}>
+
+            <div className="page-container">
+                <div className="welcome-container">Welcome to your administrator space.
+
+                    Here, you can view all the activity on your website.
+                </div>
+
+                <div className="overview-container">Overview
+
+
+                    <div className="grid_list">
+
+                        <View rowSpan={{base: 1, large: 1}}>
+                            <OverviewUsers
+                                title="utilisateurs au total"
+                                amount={userCount !== null ? userCount.toString() : ''}
+                                icon={<img src={userIcon}/>}
+                            />
+
+
+                        </View>
+                        <View rowSpan={{base: 1, large: 1}}>
+                            <OverviewUsers title="fichiers stockés"
+                                           amount={storageCount !== null ? storageCount.toString() : ''}
+                                           icon={<img src={storageIcon}/>}/>
+                        </View>
+                        <View rowSpan={{base: 1, large: 1}}>
             <OverviewUsers title ="fichiers uploadés aujourd'hui" amount={uploadedCount !== null ? uploadedCount.toString() : ''}  icon =  {<img src={cloudIcon}/>} />
           </View>
         
@@ -158,7 +144,6 @@ Here, you can view all the activity on your website.</div>
 
       </div>
     </div>
-    </>
   );
 };
 

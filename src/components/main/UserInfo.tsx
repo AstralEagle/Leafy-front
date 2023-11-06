@@ -23,7 +23,6 @@ interface User {
 const UserInfo = ({}: Props) => {
     const navigate = useNavigate();
 
-    const inputRef = useRef(null);
     const [user, setUser] = useState<User | undefined>(undefined);
 
     useEffect(() => {
