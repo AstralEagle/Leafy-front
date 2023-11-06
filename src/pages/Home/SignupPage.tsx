@@ -39,7 +39,7 @@ const SignupPage = () => {
             <AddressForm submitButton={{ content: "Next", onClick: () => setCurrentStep(StepEnum.Finalization) }} />
           )}
 
-          {currentStep === StepEnum.Finalization && <Payment />}
+          {currentStep === StepEnum.Finalization && <Payment isSigningUp />}
         </Stack>
       }
     />

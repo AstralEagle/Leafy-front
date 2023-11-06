@@ -1,20 +1,20 @@
 import { create } from "zustand";
-import { connectedUser } from "../../Config/Auth";
 
-interface ProfileApi {
+export interface ProfileApi {
+  id?: string;
   firstName: string;
   lastName: string;
   email: string;
   password: string;
 }
 
-interface PurchaseApi {
+export interface PurchaseApi {
   confirmed: boolean;
 }
 
-interface AddressApi {
-  street: string;
-  zipCode: string;
+export interface AddressApi {
+  address: string;
+  zip: string;
   city: string;
   country: {
     code: string;
@@ -23,13 +23,13 @@ interface AddressApi {
   };
 }
 
-interface AccountApi {
+export interface AccountApi {
   profile: ProfileApi;
   purchase: PurchaseApi;
   address: AddressApi;
 }
 
-interface CreateAccountState {
+export interface CreateAccountState {
   account: AccountApi;
   setAccount: (account: AccountApi) => void;
   setProfile: (profile: ProfileApi) => void;
@@ -38,23 +38,19 @@ interface CreateAccountState {
 }
 
 const useCreateAccountStore = create<CreateAccountState>((set, get) => {
-  const user = connectedUser();
-
-  // TODO: get user address
-
   const initAccount: AccountApi = {
     profile: {
-      firstName: user?.firstName ?? "",
-      lastName: user?.lastName ?? "",
-      email: user?.email ?? "",
+      firstName: "",
+      lastName: "",
+      email: "",
       password: "",
     },
     purchase: {
       confirmed: false,
     },
     address: {
-      street: "",
-      zipCode: "",
+      address: "",
+      zip: "",
       city: "",
       country: {
         code: "",

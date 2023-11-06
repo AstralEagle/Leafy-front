@@ -10,18 +10,19 @@ import { COLORS } from "../../style/colors";
 import { API_URL } from "../../routes/Url";
 import axios from "axios";
 import { isTokenValid } from "../../Config/Auth";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 interface CheckoutFormProps {
   stripe: any;
   elements: any;
   clientSecret: { client_secret: string };
+  isSigningUp: boolean;
 }
 
 // TODO:
 // verifier le format email et telephone
 
-const CheckoutForm = ({ stripe, elements, clientSecret }: CheckoutFormProps) => {
+const CheckoutForm = ({ stripe, elements, clientSecret, isSigningUp }: CheckoutFormProps) => {
   const navigate = useNavigate();
   const { address, profile } = useCreateAccountStore((state) => state.account);
 
@@ -33,6 +34,8 @@ const CheckoutForm = ({ stripe, elements, clientSecret }: CheckoutFormProps) => 
 
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [errorMessage, setErrorMessage] = React.useState<string | undefined>();
+  const [successMessage, setSuccessMessage] = React.useState<string>("");
+
   const [elementsCardValidity, setElementsCardValidity] = React.useState({
     cardNumber: false,
     cardExpiry: false,
@@ -53,8 +56,8 @@ const CheckoutForm = ({ stripe, elements, clientSecret }: CheckoutFormProps) => 
           address: {
             city: address.city,
             country: address.country.code,
-            line1: address.street,
-            postal_code: address.zipCode,
+            line1: address.address,
+            postal_code: address.zip,
           },
           email: billingEmail,
           name: billingName,
@@ -68,31 +71,40 @@ const CheckoutForm = ({ stripe, elements, clientSecret }: CheckoutFormProps) => 
     } else {
       try {
         const billingAddress = {
-          zip: address.zipCode,
+          zip: address.zip,
           country: address.country.code,
           city: address.city,
-          address: address.street,
+          address: address.address,
         };
 
-        const response = await axios({
-          method: "post",
-          url: API_URL + "/auth/signup",
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
-          data: {
-            ...profile,
-            ...billingAddress,
-          },
-        });
+        if (isSigningUp) {
+          const response = await axios({
+            method: "post",
+            url: API_URL + "/auth/signup",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            data: { ...billingAddress },
+          });
 
-        localStorage.setItem("token", response.data.userToken.toString());
-        isTokenValid() ? (window.location.pathname = "dashboard") : navigate("/login");
+          localStorage.setItem("token", response.data.userToken.toString());
+          isTokenValid() ? (window.location.pathname = "dashboard") : navigate("/login");
+        } else {
+          await axios({
+            method: "post",
+            url: API_URL + "/invoices",
+            headers: { Authorization: "Bearer " + localStorage.getItem("token") },
+            data: { ...billingAddress },
+          });
+
+          setIsLoading(false);
+          setErrorMessage("");
+          setSuccessMessage("Congrats you've added successfully your storage !");
+        }
       } catch (err) {
-        console.log(err);
-        // TODO : handle error + toast
+        setIsLoading(false);
+        setErrorMessage("Oops, something went wront !");
+        setSuccessMessage("");
       }
     }
-
-    setIsLoading(false);
   };
 
   const isDisabled =
@@ -194,7 +206,7 @@ const CheckoutForm = ({ stripe, elements, clientSecret }: CheckoutFormProps) => 
 
       <BasicButton
         onClick={handleSubmit}
-        disabled={isLoading || isDisabled}
+        disabled={isLoading || isDisabled || !!successMessage.length}
         fullWidth
         customColor={COLORS.darkRoyalBlue}
       >
@@ -211,6 +223,11 @@ const CheckoutForm = ({ stripe, elements, clientSecret }: CheckoutFormProps) => 
       {!!errorMessage && (
         <Alert severity="error" sx={{ mt: 1 }}>
           {errorMessage}
+        </Alert>
+      )}
+      {!!successMessage.length && (
+        <Alert severity="success" sx={{ mt: 1 }}>
+          {successMessage} <Link to={"/dashboard"}>Let's go to your dashboard !</Link>
         </Alert>
       )}
     </Stack>

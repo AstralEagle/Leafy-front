@@ -1,11 +1,24 @@
 import * as React from "react";
 import Menu from "./Menu";
 import ProfileForm from "../../../components/signup/ProfileForm";
-import { Box, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Stack, Typography } from "@mui/material";
+import {
+  Alert,
+  Box,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { COLORS } from "../../../style/colors";
 import { AccountCircleOutlined, ExitToAppOutlined, ReceiptLong } from "@mui/icons-material";
 import Invoices from "../../../components/settings/Invoices";
 import { logout } from "../../../Config/Auth";
+import useCreateAccountStore from "../../../hooks/zustand/CreateAccountStore";
+import { API_URL } from "../../../routes/Url";
+import axios from "axios";
 
 enum TabEnum {
   Profile,
@@ -13,6 +26,11 @@ enum TabEnum {
 }
 
 const Settings = () => {
+  const { profile } = useCreateAccountStore((state) => state.account);
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = React.useState<string>("");
+  const [successMessage, setSuccessMessage] = React.useState<string>("");
+
   const [selectedTab, setSelectedTab] = React.useState<TabEnum>(TabEnum.Profile);
   const items = [
     {
@@ -26,6 +44,46 @@ const Settings = () => {
       label: "Order history",
     },
   ];
+
+  const handleSubmit = async () => {
+    try {
+      setIsLoading(true);
+
+      const { email, firstName, lastName, password } = { ...profile };
+
+      const updatedProfile: {
+        email: string;
+        firstName: string;
+        lastName: string;
+        password?: string;
+      } = { email, firstName, lastName };
+
+      if (!!password.length) {
+        updatedProfile.password = password;
+      }
+
+      await axios({
+        method: "put",
+        url: API_URL + "/auth/profile",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+        data: { ...updatedProfile },
+      });
+
+      setIsLoading(false);
+      setErrorMessage("");
+      setSuccessMessage("Your account has been successfully updated !");
+    } catch (err) {
+      setIsLoading(false);
+      setErrorMessage("Une erreur est survenue lors de l'édition de vos informations.");
+    }
+  };
+
+  React.useEffect(() => {
+    setSuccessMessage("");
+  }, [profile]);
 
   return (
     <Box sx={{ background: COLORS.basicGrey, height: "100vh" }}>
@@ -129,13 +187,19 @@ const Settings = () => {
             {selectedTab === TabEnum.Profile ? "Edit your account" : "Order history"}
           </Box>
           {selectedTab === TabEnum.Profile && (
-            <ProfileForm
-              displayDeleteAccount
-              submitButton={{
-                onClick: () => {}, // TODO : update profile
-                content: "Save",
-              }}
-            />
+            <>
+              <ProfileForm
+                isLoading={isLoading}
+                allowEmptyPassword
+                displayDeleteAccount
+                submitButton={{
+                  onClick: () => handleSubmit(),
+                  content: "Save",
+                }}
+              />
+              {!!errorMessage && <Alert severity="warning">{errorMessage}</Alert>}
+              {!!successMessage && <Alert severity="success">{successMessage}</Alert>}
+            </>
           )}
           {selectedTab === TabEnum.OrderHistory && <Invoices />}
         </Stack>
