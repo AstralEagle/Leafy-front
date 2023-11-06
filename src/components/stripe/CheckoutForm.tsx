@@ -59,7 +59,6 @@ const CheckoutForm = ({ stripe, elements, clientSecret, isSigningUp }: CheckoutF
             line1: address.address,
             postal_code: address.zip,
           },
-          email: billingEmail,
           name: billingName,
         },
       },
@@ -82,9 +81,10 @@ const CheckoutForm = ({ stripe, elements, clientSecret, isSigningUp }: CheckoutF
             method: "post",
             url: API_URL + "/auth/signup",
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            data: { ...billingAddress },
+            data: { ...billingAddress, ...profile },
           });
 
+          setIsLoading(false);
           localStorage.setItem("token", response.data.userToken.toString());
           isTokenValid() ? (window.location.pathname = "dashboard") : navigate("/login");
         } else {
@@ -105,6 +105,7 @@ const CheckoutForm = ({ stripe, elements, clientSecret, isSigningUp }: CheckoutF
         setSuccessMessage("");
       }
     }
+    setIsLoading(false);
   };
 
   const isDisabled =
@@ -173,35 +174,14 @@ const CheckoutForm = ({ stripe, elements, clientSecret, isSigningUp }: CheckoutF
         </Stack>
       </Stack>
 
-      <Stack
-        direction={{
-          xs: "column",
-          md: "row",
-        }}
-        sx={{
-          gap: 2,
-          mb: 4,
-        }}
-      >
-        <Stack width={{ xs: "100%", md: "50%" }}>
-          <InputWithLabel
-            label={"Name on card"}
-            type="text"
-            placeholder="John DOE"
-            value={billingName}
-            onChange={(e) => setBillingName(e.target.value)}
-          />
-        </Stack>
-
-        <Stack width={{ xs: "100%", md: "50%" }}>
-          <InputWithLabel
-            label={"Email"}
-            type="email"
-            placeholder="johndoe@mail.com"
-            value={billingEmail}
-            onChange={(e) => setBillingEmail(e.target.value)}
-          />
-        </Stack>
+      <Stack direction={"column"} gap={1}>
+        <InputWithLabel
+          label={"Name on card"}
+          type="text"
+          placeholder="John DOE"
+          value={billingName}
+          onChange={(e) => setBillingName(e.target.value)}
+        />
       </Stack>
 
       <BasicButton
