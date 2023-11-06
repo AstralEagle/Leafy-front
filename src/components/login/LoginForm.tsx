@@ -1,9 +1,13 @@
 import * as React from "react";
 import { LockOutlined, PersonOutline } from "@mui/icons-material";
-import { Stack } from "@mui/material";
+import { Alert, Stack } from "@mui/material";
 import InputWithIcon from "../form/InputWithIcon";
-import { BasicButton, LoadingButton } from "../button/button";
+import { BasicButton, LoadingButton } from "../button/Button";
 import NoAccountLink from "./NoAccountLink";
+import axios from "axios";
+import { API_URL } from "../../routes/Url";
+import { isTokenValid } from "../../Config/Auth";
+import { useNavigate } from "react-router-dom";
 
 interface LoginApi {
   email: string;
@@ -12,29 +16,47 @@ interface LoginApi {
 
 export const LoginForm = () => {
   const [isSubmitting, setIsSubmitting] = React.useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = React.useState<string>("");
 
   const [account, setAccount] = React.useState<LoginApi>({
     email: "",
-    password: ""
+    password: "",
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>, property: "email" | "password") => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
+    property: "email" | "password",
+  ) => {
     setAccount((prev) => ({
       ...prev,
-      [property]: e.target.value
-    }))
-  }
+      [property]: e.target.value,
+    }));
+  };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setIsSubmitting(true);
-    // TODO : 
-    // rqt de connexion
-    // setIsSubmitting(false)
-    // redirect to dashboard si rqt OK
-    // sinon message d'erreur
-    // ! \\ supprimer setTimeout
-    setTimeout(() => setIsSubmitting(false), 400);
-  }
+
+    try {
+      const response: any = await axios({
+        method: "post",
+        url: API_URL + "/auth/login",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        data: { ...account },
+      });
+
+      localStorage.setItem("token", response.data.userToken.toString());
+
+      if (isTokenValid()) {
+        window.location.pathname = "/dashboard";
+      } else {
+        setIsSubmitting(false);
+        setErrorMessage("The authentication failed. Please, try again.");
+      }
+    } catch (e: any) {
+      setIsSubmitting(false);
+      setErrorMessage("The authentication failed. Make sure you're using the right credentials.");
+    }
+  };
 
   const isSubmitBtnDisabled = !account.email.length || !account.password.length;
 
@@ -62,21 +84,19 @@ export const LoginForm = () => {
         onChange={(e) => handleChange(e, "password")}
       />
 
-      {
-        isSubmitting ?
+      {!!errorMessage && <Alert severity="warning">{errorMessage}</Alert>}
+
+      {isSubmitting ? (
         <LoadingButton />
-        :
-        <BasicButton
-          disabled={isSubmitting || isSubmitBtnDisabled}
-          onClick={handleSubmit}
-        >
+      ) : (
+        <BasicButton disabled={isSubmitting || isSubmitBtnDisabled} onClick={handleSubmit}>
           Login
         </BasicButton>
-      }
+      )}
 
       <NoAccountLink />
     </Stack>
-  )
-}
+  );
+};
 
 export default LoginForm

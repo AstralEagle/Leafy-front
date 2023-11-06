@@ -4,8 +4,6 @@ export { default as beige } from './beige';
 export { default as grey } from './grey';
 export { default as dark } from './dark';
 
-// TODO : réorganiser et homogénéiser les couleurs des maquettes.
-
 // User
 export const deepBlue = "#113883";
 export const pastelPink = "#FFF0E2";
@@ -46,6 +44,9 @@ export const navbarBlue = "#566571";
 export const navbarBg = "#D9D9D9";
 export const cellBlue = "#7A8F9E";
 export const lightestGrey = "#E9E5DB";
+export const basicGrey = "#FBF9F9";
+export const redBrown = "#520202a1";
+export const redBrownDark = "#520202b3";
 
 // ADMIN
 export const darkestOrange = "#FF5833";
