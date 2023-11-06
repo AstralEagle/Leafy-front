@@ -5,12 +5,15 @@ import Card from "../../../components/container/Card";
 import OrderSummary from "./OrderSummary";
 import { COLORS } from "../../../style/colors";
 import HangarFullLayout from "../../../layouts/HangarFullLayout";
+import Navbar from "../../../components/Navbar";
 
 const IncreaseStorage = () => (
   <HangarFullLayout
     content={
       <Stack direction="column" justifyContent="space-around" sx={{ padding: "2rem" }}>
+        <Navbar />
         <Stack
+          sx={{ mt: "60px" }}
           direction={{
             xs: "column-reverse",
             md: "row",

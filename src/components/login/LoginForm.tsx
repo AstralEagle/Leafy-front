@@ -7,7 +7,7 @@ import NoAccountLink from "./NoAccountLink";
 import axios from "axios";
 import { API_URL } from "../../routes/Url";
 import { isTokenValid } from "../../Config/Auth";
-import { useNavigate } from "react-router-dom";
+import useCreateAccountStore from "../../hooks/zustand/CreateAccountStore";
 
 interface LoginApi {
   email: string;
@@ -15,6 +15,7 @@ interface LoginApi {
 }
 
 export const LoginForm = () => {
+  const { setProfile } = useCreateAccountStore((state) => state);
   const [isSubmitting, setIsSubmitting] = React.useState<boolean>(false);
   const [errorMessage, setErrorMessage] = React.useState<string>("");
 

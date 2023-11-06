@@ -10,25 +10,25 @@ interface Props {
 
 const WidgetFile = ({type, isSelected, onClick}: Props) => {
     return (
-        <Box
-            onClick={onClick}
-            sx={{
-                width: "145px",
-                py: "12px",
-                px: "8px",
-                display: "flex",
-                alignItems: "center",
-                gap: "10px",
-                borderRadius: "14px",
-                backgroundColor: isSelected ? getColorByType(type) : "white" ,
-                border: isSelected ? undefined : "1px solid #DFE7F5",
-        }}>
-            {getIconByType(type)}
-            <Box sx={{flex: 1, display: "flex", justifyContent: "center"}}>
-
-            <Typography sx={{fontSize: "18px", color: "#113883"}}>{getTypeTitle(type)}</Typography>
-            </Box>
+      <Box
+        onClick={onClick}
+        sx={{
+          width: "145px",
+          py: "12px",
+          px: "8px",
+          display: "flex",
+          alignItems: "center",
+          gap: "10px",
+          borderRadius: "14px",
+          backgroundColor: isSelected ? getColorByType(type) : "white",
+          border: isSelected ? undefined : "1px solid #DFE7F5",
+        }}
+      >
+        {getIconByType(type)}
+        <Box sx={{ flex: 1, display: "flex", justifyContent: "center" }}>
+          <Typography sx={{ fontSize: "18px", color: "#113883", cursor: "pointer" }}>{getTypeTitle(type)}</Typography>
         </Box>
+      </Box>
     );
 };
 
