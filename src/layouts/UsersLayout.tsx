@@ -2,6 +2,7 @@ import { Box, Grid, Stack, Typography } from "@mui/material";
 import React from "react";
 import { COLORS } from "../style/colors";
 import HangarAsset from "../assets/images/hangar.svg";
+import DenseTable from "../components/densetable/densetable";
 
 interface HomepageProps {
   content: JSX.Element;
@@ -14,7 +15,7 @@ const UsersLayout = () => {
     
     
   <div className="page-container">
-hellooo
+  <DenseTable />
     </div>
     </div>
   </>

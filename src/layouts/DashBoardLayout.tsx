@@ -118,13 +118,7 @@ Here, you can view all the activity on your website.</div>
           <View rowSpan={{ base: 1, large: 1 }}>
             <OverviewUsers title ="fichiers stockés" amount={storageCount !== null ? storageCount.toString() : ''}  icon =  {<img src={storageIcon}/>} />
           </View>
-          {/* <View rowSpan={{ base: 1, large: 1 }}>
-            <OverviewUsers
-              
-              amount="23,762"
-              icon =  {<img src={cloudIcon}/>}
-            />
-          </View> */}
+        
          
           </div>
           </div>
@@ -155,40 +149,6 @@ Here, you can view all the activity on your website.</div>
           </View>
 
 
-
- 
-      {/* <View rowSpan={{ base: 1, large: 4 }}>
-            <Card height="100%" borderRadius="15px">
-              <div className="card-title">Traffic Sources</div>
-              <div className="chart-wrap">
-                {barChartData ? (
-                  <TrafficSources
-                    title="Traffic Sources"
-                    data={trafficSourceData}
-                    type="donut"
-                    labels={[
-                      "Direct",
-                      "Internal",
-                      "Referrals",
-                      "Search Engines",
-                      "Other",
-                    ]}
-                  />
-                ) : (
-                  <Flex direction="column" minHeight="285px">
-                    <Placeholder size="small" />
-                    <Placeholder size="small" />
-                    <Placeholder size="small" />
-                    <Placeholder size="small" />
-                  </Flex>
-                )}
-              </div>
-            </Card>
-          </View> */}
-    
-   
-    
-      {/* {baseConfig.footer ? <Footer /> : <></>} */}
       </div>
     </div>
     </>
