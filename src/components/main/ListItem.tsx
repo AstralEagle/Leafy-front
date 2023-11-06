@@ -38,10 +38,11 @@ const ListItem = ({data}: Props) => {
       window.URL.revokeObjectURL(url);
     };
     const onDelete = async () => {
-      await request("file", "delete", {
-        idFile: data.id,
-      });
-    };
+        console.log("Delete")
+        await request("file", "delete", {
+            idFile: data.id
+        })
+    }
 
 
     return (
