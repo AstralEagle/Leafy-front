@@ -17,9 +17,9 @@ import {
 import "./DashBoardLayout.css";
 
 
-import OverviewUsers from "../pages/DashBoard/OverviewUsers";
+import OverviewUsers from "../pages/DashBoard/Graphs/OverviewUsers";
 
-import CustomersSummary from "../pages/DashBoard/CustomersSummary";
+import CustomersSummary from "../pages/DashBoard/Graphs/CustomersSummary";
 import axios from "axios";
 import { request } from "../Config/request";
 
@@ -64,32 +64,27 @@ const DashboardLayout = () => {
   }, []);
 
 
-
   const [userCount, setUserCount] = useState<number | null>(null);
-
+  const [storageCount, setStorageCount] = useState<number | null>(null);
 
   useEffect(() => {
+
     const fetchUsers = async () => {
       try {
-        // Your mock response (replace this with your actual API call)
-        const response = {
-          user: 3,
-          files: 1,
-          fileUpladToday: 0
-        };
-  
-        // Get the user count from the response
-        const count = response.user;
-        setUserCount(count);
-       console.log(count)
+        const response = await request('admin',"get", undefined );
+        // const users = response.data;
+       const usersCount = response.user;
+       const storageCount = response.files;
+        setUserCount(usersCount);
+        setStorageCount(storageCount);
+        console.log("number of users : " ,response)
       } catch (error) {
         console.error('Error fetching users:', error);
       }
     };
-  
+
     fetchUsers();
   }, []);
-  
 
 
   
@@ -112,23 +107,24 @@ Here, you can view all the activity on your website.</div>
       
       <View rowSpan={{ base: 1, large: 1 }}>
   <OverviewUsers
+  title = "utilisateurs au total"
     amount={userCount !== null ? userCount.toString() : ''}
     icon={<img src={userIcon} />}
   />
 
 
-            
+
           </View>
           <View rowSpan={{ base: 1, large: 1 }}>
-            <OverviewUsers amount="251,607"  icon =  {<img src={storageIcon}/>} />
+            <OverviewUsers title ="fichiers stockés" amount={storageCount !== null ? storageCount.toString() : ''}  icon =  {<img src={storageIcon}/>} />
           </View>
-          <View rowSpan={{ base: 1, large: 1 }}>
+          {/* <View rowSpan={{ base: 1, large: 1 }}>
             <OverviewUsers
               
               amount="23,762"
               icon =  {<img src={cloudIcon}/>}
             />
-          </View>
+          </View> */}
          
           </div>
           </div>
