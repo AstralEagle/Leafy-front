@@ -1,9 +1,9 @@
 import React from 'react';
 import {Box, IconButton, Typography} from "@mui/material";
-import {formatFileSize} from "../../helpers/Convert";
-import {getIconByType} from "../IconFile";
-import {DeleteOutline, Download} from "@mui/icons-material";
-import { dowloadFile, request } from "../../Config/request";
+import { dowloadFile, request } from '../../../Config/request';
+import { formatFileSize } from '../../../helpers/Convert';
+import { getIconByType } from '../../IconFile';
+
 
 interface Props {
     data: dataItem;
@@ -26,17 +26,18 @@ const ListItem = ({data}: Props) => {
     const infoIcon = getIconByType(data.type);
 
     const onDownload = async () => {
-      const response = await dowloadFile(`file/download/${data.id}`);
-      const url = window.URL.createObjectURL(new Blob([response]));
-      const link = document.createElement("a");
-      link.href = url;
-      link.setAttribute("download", data.name);
-      document.body.appendChild(link);
-      link.click();
+        console.log(data.bytes)
+        const response = await dowloadFile(`file/download/${data.id}`)
+        const url = window.URL.createObjectURL(new Blob([response]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', data.name);
+        document.body.appendChild(link);
+        link.click();
 
-      document.body.removeChild(link);
-      window.URL.revokeObjectURL(url);
-    };
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+    }
     const onDelete = async () => {
         console.log("Delete")
         await request("file", "delete", {
@@ -51,7 +52,7 @@ const ListItem = ({data}: Props) => {
                 display: "flex",
                 alignItems: "center",
                 gap: "10px",
-                backgroundColor: "rgba(255,246,238,0.25)",
+                backgroundColor: "#0E203A ",
                 borderRadius: "20px",
                 px: "18px",
                 py: "10px",
@@ -59,9 +60,9 @@ const ListItem = ({data}: Props) => {
             }}
         >
             <Box className="icons" sx={{width: "45px"}}>{infoIcon}</Box>
-            <Box className="name" sx={{flex: 5, overflowX: "hidden"}}>
+            <Box className="name" sx={{flex: 5, overflowX: "hidden",}}>
                 <Typography sx={{
-                    color: "#113883",
+                    color: "white",
                     whiteSpace: "nowrap",
                     textOverflow: "ellipsis",
                     overflowX: "hidden"
@@ -73,14 +74,7 @@ const ListItem = ({data}: Props) => {
             <Box className="date" sx={{flex: 1}}>
                 <Typography sx={{whiteSpace: "nowrap"}}>{date.toLocaleDateString(undefined, {day: "numeric", month: "long"})}</Typography>
             </Box>
-            <Box className="action" sx={{width: "80px"}}>
-                <IconButton onClick={onDownload}>
-                    <Download sx={{color: "#113883"}}/>
-                </IconButton>
-                <IconButton onClick={onDelete}>
-                    <DeleteOutline sx={{color: "#CC7474"}}/>
-                </IconButton>
-            </Box>
+            
         </Box>
     );
 };

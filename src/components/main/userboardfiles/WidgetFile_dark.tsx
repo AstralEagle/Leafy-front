@@ -1,6 +1,7 @@
 import React from 'react';
 import {Box, Typography} from "@mui/material";
-import {getColorByType, getIconByType} from "../IconFile";
+import { getColorByType, getIconByType } from '../../IconFile';
+
 
 interface Props {
     type: string;
@@ -20,13 +21,13 @@ const WidgetFile = ({type, isSelected, onClick}: Props) => {
                 alignItems: "center",
                 gap: "10px",
                 borderRadius: "14px",
-                backgroundColor: isSelected ? getColorByType(type) : "white" ,
+                backgroundColor: isSelected ? getColorByType(type) : "#0B203F " ,
                 border: isSelected ? undefined : "1px solid #DFE7F5",
         }}>
             {getIconByType(type)}
             <Box sx={{flex: 1, display: "flex", justifyContent: "center"}}>
 
-            <Typography sx={{fontSize: "18px", color: "#113883"}}>{getTypeTitle(type)}</Typography>
+            <Typography sx={{fontSize: "18px", color: "white"}}>{getTypeTitle(type)}</Typography>
             </Box>
         </Box>
     );

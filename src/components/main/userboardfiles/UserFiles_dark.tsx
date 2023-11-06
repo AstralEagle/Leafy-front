@@ -1,10 +1,9 @@
 // UserFiles.js
 
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { request } from "../../Config/request";
-import ListFiles from "./userboardfiles/ListFiles_dark";
-import { dataItem } from "./userboardfiles/ListItem_dark";
+import { request } from "../../../Config/request";
+import ListFiles from "./ListFiles_dark";
+import { dataItem } from "./ListItem_dark";
 
 
 interface UserFilesProps {

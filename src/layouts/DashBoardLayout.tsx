@@ -66,6 +66,7 @@ const DashboardLayout = () => {
 
   const [userCount, setUserCount] = useState<number | null>(null);
   const [storageCount, setStorageCount] = useState<number | null>(null);
+  const [uploadedCount, setUploadedCount] = useState<number | null>(null);
 
   useEffect(() => {
 
@@ -75,8 +76,11 @@ const DashboardLayout = () => {
         // const users = response.data;
        const usersCount = response.user;
        const storageCount = response.files;
+       const uploadedCount = response.fileUpladToday;
+       
         setUserCount(usersCount);
         setStorageCount(storageCount);
+        setUploadedCount(uploadedCount);
         console.log("number of users : " ,response)
       } catch (error) {
         console.error('Error fetching users:', error);
@@ -117,6 +121,9 @@ Here, you can view all the activity on your website.</div>
           </View>
           <View rowSpan={{ base: 1, large: 1 }}>
             <OverviewUsers title ="fichiers stockés" amount={storageCount !== null ? storageCount.toString() : ''}  icon =  {<img src={storageIcon}/>} />
+          </View>
+          <View rowSpan={{ base: 1, large: 1 }}>
+            <OverviewUsers title ="fichiers uploadés aujourd'hui" amount={uploadedCount !== null ? uploadedCount.toString() : ''}  icon =  {<img src={cloudIcon}/>} />
           </View>
         
          
