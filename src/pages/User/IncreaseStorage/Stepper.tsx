@@ -21,7 +21,7 @@ export const steps = [
   },
   {
     label: "Payment details",
-    content: <Payment />,
+    content: <Payment isSigningUp={false} />,
   },
 ];
 

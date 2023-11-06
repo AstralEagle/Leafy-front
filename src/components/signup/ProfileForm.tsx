@@ -4,17 +4,28 @@ import InputWithLabel from "../form/InputWithLabel";
 import { BasicButton } from "../button/Button";
 import useCreateAccountStore from "../../hooks/zustand/CreateAccountStore";
 import DeleteAccount from "../../pages/User/Settings/DeleteAccount";
+import { isTokenValid } from "../../Config/Auth";
+import axios from "axios";
+import { API_URL } from "../../routes/Url";
 
 interface ProfileFormProps {
   displayDeleteAccount?: boolean;
   minWidth?: number;
+  allowEmptyPassword?: boolean;
+  isLoading?: boolean;
   submitButton: {
     content: string;
     onClick: () => void;
   };
 }
 
-export const ProfileForm = ({ submitButton, displayDeleteAccount, minWidth = 45 }: ProfileFormProps) => {
+export const ProfileForm = ({
+  submitButton,
+  displayDeleteAccount,
+  minWidth = 45,
+  allowEmptyPassword = false,
+  isLoading = false,
+}: ProfileFormProps) => {
   const { profile, setProfile } = useCreateAccountStore((state) => ({
     profile: state.account.profile,
     setProfile: state.setProfile,
@@ -31,7 +42,28 @@ export const ProfileForm = ({ submitButton, displayDeleteAccount, minWidth = 45 
   };
 
   const isSubmitBtnDisabled =
-    !profile.email.length || !profile.password.length || !profile.firstName.length || !profile.lastName.length;
+    !profile.email.length ||
+    !profile.firstName.length ||
+    !profile.lastName.length ||
+    (!profile.password.length && !allowEmptyPassword) ||
+    isLoading;
+
+  const getUser = async () => {
+    if (isTokenValid()) {
+      const currentUser = await axios({
+        method: "get",
+        url: API_URL + "/auth",
+        headers: { Authorization: "Bearer " + localStorage.getItem("token") },
+      });
+
+      const { email, firstName, lastName } = currentUser.data;
+      setProfile({ ...profile, email, firstName, lastName });
+    }
+  };
+
+  React.useEffect(() => {
+    getUser();
+  }, []);
 
   return (
     <Stack

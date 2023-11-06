@@ -20,7 +20,7 @@ export const AddressForm = ({ submitButton }: AddressFormProps) => {
     setAddress: state.setAddress,
   }));
 
-  const handleChange = (value: string | CountryType, property: "street" | "zipCode" | "city" | "country") => {
+  const handleChange = (value: string | CountryType, property: "address" | "zip" | "city" | "country") => {
     setAddress({
       ...address,
       [property]: value,
@@ -28,11 +28,11 @@ export const AddressForm = ({ submitButton }: AddressFormProps) => {
   };
 
   const isSubmitBtnDisabled =
-    !address.street.length ||
-    !address.zipCode.length ||
+    !address.address.length ||
+    !address.zip.length ||
     !address.city.length ||
-    !address.country.code.length ||
-    !address.country.label.length;
+    !address.country.code?.length ||
+    !address.country.label?.length;
 
   return (
     <Stack
@@ -44,17 +44,17 @@ export const AddressForm = ({ submitButton }: AddressFormProps) => {
       alignItems={"center"}
     >
       <InputWithLabel
-        label={"Street Address"}
+        label={"address Address"}
         placeholder="75 rue du Javelot"
-        value={address.street}
-        onChange={(e) => handleChange(e.target.value, "street")}
+        value={address.address}
+        onChange={(e) => handleChange(e.target.value, "address")}
       />
 
       <InputWithLabel
         label={"Zip Code"}
         placeholder="75013"
-        value={address.zipCode}
-        onChange={(e) => handleChange(e.target.value, "zipCode")}
+        value={address.zip}
+        onChange={(e) => handleChange(e.target.value, "zip")}
       />
 
       <InputWithLabel
