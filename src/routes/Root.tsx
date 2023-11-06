@@ -22,8 +22,11 @@ const Root = () => {
         <Route path="/signup" element={isUserConnected ? <DashboardPage /> : <SignupPage />} />
         <Route path="/payment" element={isUserConnected ? <IncreaseStorage /> : <LoginPage />} />
         <Route path="/settings" element={isUserConnected ? <Settings /> : <LoginPage />} />
-        {/* TODO : bloquer l'accès */}
-        <Route path="/dashboard" element={isUserConnected ? <DashBoard /> : <LoginPage />} />
+
+        {/* TODO : DashboardPage pour user et DashBoard pour admin bloquer l'accès */}
+        <Route path="/dashboard" element={isUserConnected ? <DashboardPage /> : <LoginPage />} />
+
+        {/* TODO : QUE ADMIN */}
         <Route path="/usersboard" element={isUserConnected ? <UsersBoard /> : <LoginPage />} />
 
         {isUserConnected && <Route path="/logout" element={<LoginPage />} />}
