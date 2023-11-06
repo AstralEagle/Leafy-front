@@ -49,7 +49,7 @@ const ListFiles = ({data}: Props) => {
                     <Box sx={{flex: 1, display: "flex", flexDirection: "column", overflowY: "scroll", gap: "8px"}}>
 
                         {
-                            data.map((x: dataItem, i) => (
+                            data.filter(x => x.type.includes(menuSelected)).map((x: dataItem, i) => (
                                 <ListItem key={i} data={x}/>
                             ))
                         }
