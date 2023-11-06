@@ -10,6 +10,7 @@ interface Props {
 const ListFiles = ({data}: Props) => {
 
     const [menuSelected, setMenuSelected] = useState<string>("");
+    const [sortValue, setSortValue] = useState<number>(0);
 
     return (
         <Box sx={{flex: "1", display: "flex", flexDirection: "column", alignItems: "center", overflow: "hidden"}}>
@@ -26,7 +27,6 @@ const ListFiles = ({data}: Props) => {
                             display: "flex",
                             alignItems: "center",
                             gap: "10px",
-                            backgroundColor: "rgba(255,246,238,0.25)",
                             borderRadius: "20px",
                             px: "18px",
                             py: "10px",
@@ -34,23 +34,22 @@ const ListFiles = ({data}: Props) => {
                         }}
                     >
                         <Box className="icons" sx={{width: "45px"}}></Box>
-                        <Box className="name" sx={{flex: 5, overflowX: "hidden"}}>
-                            <Typography>Name</Typography>
+                        <Box className="name" sx={{flex: 5, overflowX: "hidden"}} onClick={() => {setSortValue(sortValue === 1 ? 0: 1)}}>
+                            <Typography sx={{fontWeight: sortValue == 1 ? 600: undefined}}>Name</Typography>
                         </Box>
-                        <Box className="size" sx={{flex: 1}}>
-                            <Typography>Size</Typography>
+                        <Box className="size" sx={{flex: 1}} onClick={() => {setSortValue(sortValue === 2 ? 0: 2)}}>
+                            <Typography sx={{fontWeight: sortValue == 2 ? 600: undefined}}>Size</Typography>
                         </Box>
-                        <Box className="date" sx={{flex: 1}}>
-                            <Typography sx={{whiteSpace: "nowrap"}}>Date added</Typography>
+                        <Box className="date" sx={{flex: 1}} onClick={() => {setSortValue(sortValue === 3 ? 0: 3)}}>
+                            <Typography sx={{fontWeight: sortValue == 3 ? 600: undefined}}>Date added</Typography>
                         </Box>
                         <Box className="action" sx={{width: "80px"}}>
                         </Box>
                     </Box>
                     <Box sx={{flex: 1, display: "flex", flexDirection: "column", overflowY: "hidden"}}>
                         <Box sx={{flex: 1, display: "flex", flexDirection: "column", overflowY: "scroll", gap: "8px", height: "100%"}}>
-
                             {
-                                data.filter(x => x.type.includes(menuSelected)).map((x: dataItem, i) => (
+                                data.filter(x => x.type.includes(menuSelected)).sort(selectSortByValue(sortValue)).map((x: dataItem, i) => (
                                     <ListItem key={i} data={x}/>
                                 ))
                             }
@@ -62,9 +61,23 @@ const ListFiles = ({data}: Props) => {
     );
 };
 
-const selectSortByValue = () => {
-
+const selectSortByValue = (sortedValue: number) => {
+    switch (sortedValue) {
+        case 1:
+            return sortByName;
+        case 2:
+            return sortBySize;
+        case 3:
+            return sortByDate;
+        default:
+            return defaultSort;
+    }
 }
+
+const defaultSort = ((a: dataItem, b: dataItem) => a.name.localeCompare(b.name))
+const sortByName = ((a: dataItem, b: dataItem) => a.name.localeCompare(b.name))
+const sortBySize = ((a: dataItem, b: dataItem) => b.size - a.size)
+const sortByDate = ((a: dataItem, b: dataItem) => new Date(b.created).getTime() - new Date(a.created).getTime())
 
 
 export default ListFiles;

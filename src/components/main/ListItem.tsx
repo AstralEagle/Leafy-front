@@ -16,7 +16,6 @@ export interface dataItem {
     type: string;
     created: string;
     downloadUrl: string;
-    bytes: any;
 }
 
 
