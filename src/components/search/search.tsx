@@ -15,13 +15,18 @@ const SearchBar: React.FC<SearchBarProps> = ({ setSearchQuery }) => (
       onChange={(e) => {
         setSearchQuery(e.target.value);
       }}
-      label="Enter a city name"
+      sx={{
+        backgroundColor: "white",
+        borderRadius: "20px",
+        width: "260px" 
+      }}
+      label="Search user"
       variant="outlined"
       placeholder="Search..."
       size="small"
     />
     <IconButton type="submit" aria-label="search">
-      <SearchIcon style={{ fill: "blue" }} />
+      <SearchIcon style={{ fill: "white" }} />
     </IconButton>
   </form>
 );
