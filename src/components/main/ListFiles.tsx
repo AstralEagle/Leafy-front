@@ -9,6 +9,8 @@ interface Props {
 
 const ListFiles = ({data}: Props) => {
 
+
+    console.log("data", data);
     const [menuSelected, setMenuSelected] = useState<string>("");
 
     return (
