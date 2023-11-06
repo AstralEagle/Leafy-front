@@ -12,8 +12,8 @@ const ListFiles = ({data}: Props) => {
     const [menuSelected, setMenuSelected] = useState<string>("");
 
     return (
-        <Box sx={{flex: "1", display: "flex", flexDirection: "column", alignItems: "center"}}>
-            <Box sx={{flex: 1, display: "flex", flexDirection: "column", alignItems: "center", py: "46px", gap: "46px"}}>
+        <Box sx={{flex: "1", display: "flex", flexDirection: "column", alignItems: "center", overflow: "hidden"}}>
+            <Box sx={{flex: 1, display: "flex", flexDirection: "column", alignItems: "center", py: "46px", gap: "46px", overflow: "hidden"}}>
                 <Box sx={{display: "flex", gap: "40px", mx: "60px"}}>
                     {["", "audio", "video", "image"].map((x: string, i) => (
                         <WidgetFile key={i} type={x} isSelected={menuSelected === x}
@@ -46,18 +46,25 @@ const ListFiles = ({data}: Props) => {
                         <Box className="action" sx={{width: "80px"}}>
                         </Box>
                     </Box>
-                    <Box sx={{flex: 1, display: "flex", flexDirection: "column", overflowY: "scroll", gap: "8px"}}>
+                    <Box sx={{flex: 1, display: "flex", flexDirection: "column", overflowY: "hidden"}}>
+                        <Box sx={{flex: 1, display: "flex", flexDirection: "column", overflowY: "scroll", gap: "8px", height: "100%"}}>
 
-                        {
-                            data.filter(x => x.type.includes(menuSelected)).map((x: dataItem, i) => (
-                                <ListItem key={i} data={x}/>
-                            ))
-                        }
+                            {
+                                data.filter(x => x.type.includes(menuSelected)).map((x: dataItem, i) => (
+                                    <ListItem key={i} data={x}/>
+                                ))
+                            }
+                        </Box>
                     </Box>
                 </Box>
             </Box>
         </Box>
     );
 };
+
+const selectSortByValue = () => {
+
+}
+
 
 export default ListFiles;

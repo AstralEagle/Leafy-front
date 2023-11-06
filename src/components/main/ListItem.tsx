@@ -28,7 +28,6 @@ const ListItem = ({data}: Props) => {
     const infoIcon = getIconByType(data.type);
 
     const onDownload = async () => {
-        console.log(data.bytes)
         const response = await dowloadFile(`file/download/${data.id}`)
         const url = window.URL.createObjectURL(new Blob([response]));
         const link = document.createElement('a');
@@ -41,7 +40,6 @@ const ListItem = ({data}: Props) => {
         window.URL.revokeObjectURL(url);
     }
     const onDelete = async () => {
-        console.log("Delete")
         await request("file", "delete", {
             idFile: data.id
         })
