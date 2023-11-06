@@ -1,7 +1,6 @@
-import { jwtDecode } from "jwt-decode";
-import useCreateAccountStore from "../hooks/zustand/CreateAccountStore";
+import {jwtDecode} from "jwt-decode";
 import axios from "axios";
-import { API_URL } from "../routes/Url";
+import {API_URL} from "../routes/Url";
 
 interface TokenBase {
   iat: number;
@@ -36,19 +35,14 @@ export const isTokenValid = () => {
 export const connectedUser = async () => {
   const token = localStorage.getItem("token");
 
-  if (!!token) {
-    if (isTokenValid()) {
-      const currentUser = await axios({
-        method: "get",
-        url: API_URL + "/auth",
-        headers: { Authorization: "Bearer " + localStorage.getItem("token") },
-      });
-      return currentUser.data;
-    } else {
-      window.location.pathname = "/login";
-    }
+  if (!!token && isTokenValid()) {
+    const currentUser = await axios({
+      method: "get",
+      url: API_URL + "/auth",
+      headers: {Authorization: "Bearer " + localStorage.getItem("token")},
+    });
+    return currentUser.data;
   }
-  window.location.pathname = "/login";
 };
 
 export const logout = () => {
