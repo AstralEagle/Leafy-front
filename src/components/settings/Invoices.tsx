@@ -21,6 +21,40 @@ const Invoices = () => {
   const [errorMessage, setErrorMessage] = React.useState<string>("");
   const [invoices, setInvoices] = React.useState<any[] | undefined>();
 
+
+  const download = async (orderId: string) => {
+    try {
+      const response = await axios({
+        method: "get",
+        url: API_URL + "/invoices/order/" + orderId,
+        headers: { Authorization: "Bearer " + localStorage.getItem("token") },
+      });
+
+      setErrorMessage("");
+
+      const binaryString = window.atob(response.data);
+      const binaryLen = binaryString.length;
+      const bytes = new Uint8Array(binaryLen);
+      for (let i = 0; i < binaryLen; ++i) {
+        bytes[i] = binaryString.charCodeAt(i);
+      }
+
+      const blob = new Blob([bytes], { type: "application/pdf" });
+      const downloadLink = document.createElement("a");
+      downloadLink.href = window.URL.createObjectURL(blob);
+      downloadLink.download = "facture" + orderId + ".pdf";
+      downloadLink.style.display = "none";
+
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+    } catch (e: any) {
+      if (e.status !== 404) {
+        setErrorMessage("Une erreur est survenue lors du téléchargement.");
+      }
+    }
+  };
+
   const getInvoices = async () => {
     try {
       const response = await axios({
@@ -91,7 +125,7 @@ const Invoices = () => {
                       {invoice.quantity} Go
                     </TableCell>
                     <TableCell sx={{ border: "none", borderRadius: "0 1rem 1rem 0" }} align="center">
-                      <IconButton sx={{ color: COLORS.deepBlue }}>
+                      <IconButton sx={{ color: COLORS.deepBlue }} onClick={() => download(invoice.id)}>
                         <Download />
                       </IconButton>
                     </TableCell>

@@ -3,9 +3,7 @@ import {Box, IconButton, Typography} from "@mui/material";
 import {formatFileSize} from "../../helpers/Convert";
 import {getIconByType} from "../IconFile";
 import {DeleteOutline, Download} from "@mui/icons-material";
-import {dowloadFile, request} from "../../Config/request";
-import axios from "axios";
-import {API_URL} from "../../routes/Url";
+import { dowloadFile, request } from "../../Config/request";
 
 interface Props {
     data: dataItem;
@@ -28,24 +26,22 @@ const ListItem = ({data}: Props) => {
     const infoIcon = getIconByType(data.type);
 
     const onDownload = async () => {
-        console.log(data.bytes)
-        const response = await dowloadFile(`file/download/${data.id}`)
-        const url = window.URL.createObjectURL(new Blob([response]));
-        const link = document.createElement('a');
-        link.href = url;
-        link.setAttribute('download', data.name);
-        document.body.appendChild(link);
-        link.click();
+      const response = await dowloadFile(`file/download/${data.id}`);
+      const url = window.URL.createObjectURL(new Blob([response]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", data.name);
+      document.body.appendChild(link);
+      link.click();
 
-        document.body.removeChild(link);
-        window.URL.revokeObjectURL(url);
-    }
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    };
     const onDelete = async () => {
-        console.log("Delete")
-        await request("file", "delete", {
-            idFile: data.id
-        })
-    }
+      await request("file", "delete", {
+        idFile: data.id,
+      });
+    };
 
 
     return (
