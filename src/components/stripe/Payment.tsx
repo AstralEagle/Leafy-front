@@ -8,7 +8,11 @@ import { API_URL } from "../../routes/Url";
 
 const stripePromise = loadStripe(process.env.REACT_APP_CLIENT_PUBLIC_STRIPE!);
 
-const Payment = () => {
+interface PaymentProps {
+  isSigningUp: boolean;
+}
+
+const Payment = ({ isSigningUp }: PaymentProps) => {
   const [isLoading, setIsLoading] = React.useState<boolean>(true);
   const [clientSecret, setClientSecret] = React.useState<{ client_secret: string } | undefined>();
   const [errorMessage, setErrorMessage] = React.useState<string>("");
@@ -58,7 +62,9 @@ const Payment = () => {
   ) : (
     <Elements stripe={stripePromise} options={options}>
       <ElementsConsumer>
-        {({ stripe, elements }) => <CheckoutForm stripe={stripe} elements={elements} clientSecret={clientSecret} />}
+        {({ stripe, elements }) => (
+          <CheckoutForm isSigningUp={isSigningUp} stripe={stripe} elements={elements} clientSecret={clientSecret} />
+        )}
       </ElementsConsumer>
     </Elements>
   );
